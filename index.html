@@ -88,7 +88,7 @@
             outline: none;
             transition: var(--transition);
             cursor: pointer;
-            appearance: none; /* 기본 화살표 제거 */
+            appearance: none;
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
             background-position: right 15px center;
@@ -169,26 +169,29 @@
         }
         .btn-icon:hover { background: var(--border); }
 
-        /* 시간표 테이블 */
+        /* 시간표 세로 배치 테이블 */
         .table-container { overflow-x: auto; }
         table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            min-width: 600px;
+            min-width: 500px;
         }
         th, td {
             padding: 15px 10px;
             text-align: center;
             border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+            height: 30px; 
         }
-        th { font-weight: 700; color: var(--secondary); padding-bottom: 20px; }
+        th { font-weight: 700; color: var(--secondary); padding-bottom: 15px; }
         td { font-weight: 600; }
         
+        /* 알파벳 선택과목 강조 */
         .elective {
             background: var(--primary); color: white;
-            padding: 6px 12px; border-radius: 10px; font-weight: 800;
-            display: inline-block; box-shadow: 0 2px 4px rgba(79, 70, 229, 0.3);
+            padding: 5px 10px; border-radius: 8px; font-weight: 700; font-size: 14px;
+            display: inline-block; box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
         }
 
         /* 모달 팝업 */
@@ -211,8 +214,6 @@
         /* 기말고사 전용 테이블 */
         .exam-table th { background: var(--bg-color); border: 1px solid var(--border); }
         .exam-table td { border: 1px solid var(--border); font-size: 13px; padding: 10px; }
-        .exam-badge { background: #FEE2E2; color: #991B1B; padding: 3px 8px; border-radius: 6px; font-size: 11px; margin-bottom:4px; display:inline-block; }
-        body.dark-mode .exam-badge { background: #7F1D1D; color: #FECACA; }
 
         .hidden { display: none !important; }
         
@@ -302,14 +303,14 @@
             <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--secondary);">기간: 2026. 6. 24(수) ~ 7. 1(수)</p>
         </div>
 
-        <!-- 시간표 카드 -->
+        <!-- 시간표 카드 (세로 배치형) -->
         <div class="card">
             <div class="card-header">⏱️ 우리 반 주간 시간표</div>
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th>요일</th><th>1교시</th><th>2교시</th><th>3교시</th><th>4교시</th><th>5교시</th><th>6교시</th><th>7교시</th>
+                            <th>교시</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th>
                         </tr>
                     </thead>
                     <tbody id="timetableBody"></tbody>
@@ -414,15 +415,15 @@
                     </tr>
                     <tr>
                         <td><strong>3교시</strong><br>(11:40)</td>
-                        <td><span class="exam-badge">공통수학1</span></td>
-                        <td><span class="exam-badge">영어I</span></td>
-                        <td><span class="exam-badge">화법과작문</span></td>
-                        <td><span class="exam-badge">공통영어1</span></td>
-                        <td><span class="exam-badge">대수</span></td>
-                        <td><span class="exam-badge">확률과통계</span></td>
-                        <td><span class="exam-badge">통합과학1</span></td>
-                        <td><span class="exam-badge">현대사회<br>와윤리</span></td>
-                        <td><span class="exam-badge">지구과학II</span></td>
+                        <td>공통수학1</td>
+                        <td>영어I</td>
+                        <td>화법과작문</td>
+                        <td>공통영어1</td>
+                        <td>대수</td>
+                        <td>확률과통계</td>
+                        <td>통합과학1</td>
+                        <td>현대사회<br>와윤리</td>
+                        <td>지구과학II</td>
                     </tr>
                 </tbody>
             </table>
@@ -456,15 +457,15 @@
                     </tr>
                     <tr>
                         <td><strong>3교시</strong><br>(11:40)</td>
-                        <td><span class="exam-badge">통합사회1</span></td>
-                        <td><span class="exam-badge">중국어I</span></td>
-                        <td><span class="exam-badge">물리학II</span></td>
-                        <td><span class="exam-badge">공통국어1</span></td>
-                        <td><span class="exam-badge">주제탐구/<br>독서</span></td>
-                        <td><span class="exam-badge">생명과학II</span></td>
-                        <td><span class="exam-badge">한국사1</span></td>
-                        <td><span class="exam-badge">문학</span></td>
-                        <td><span class="exam-badge">영독작</span></td>
+                        <td>통합사회1</td>
+                        <td>중국어I</td>
+                        <td>물리학II</td>
+                        <td>공통국어1</td>
+                        <td>주제탐구/<br>독서</td>
+                        <td>생명과학II</td>
+                        <td>한국사1</td>
+                        <td>문학</td>
+                        <td>영독작</td>
                     </tr>
                 </tbody>
             </table>
@@ -474,28 +475,50 @@
 </div>
 
 <script>
-    // 1. 시간표 DB (월~금)
-    const defaultWeek = [
-        ["국어", "수학", "영어", "체육", "창체", "창체", "창체"], 
-        ["영어", "수학", "과학", "사회", "미술", "음악", "진로"], 
-        ["수학", "국어", "역사", "정보", "체육", "과학", ""],     
-        ["과학", "영어", "수학", "국어", "사회", "미술", "창체"], 
-        ["사회", "과학", "국어", "수학", "음악", "체육", "자율"]  
-    ];
-
+    // 1. 시간표 DB (완벽 복구본!)
+    // 사진에 찍혀있던 1~3학년 각 10개 반의 "월요일 원본 시간표"를 100% 그대로 다 쳤습니다.
+    // 화, 수, 목, 금요일은 사진에 없어서 빈칸("")으로 비워두었으니 나중에 채워넣으시면 됩니다!
+    const emptyDay = ["", "", "", "", "", "", ""];
+    
     const timetableDB = {
-        "1-1": [ ["미술", "공영", "통과", "공국", "정보", "통사", "공수"], ...defaultWeek.slice(1) ],
-        "1-2": [ ["통과", "미술", "공수", "통사", "국사", "체육", "통과"], ...defaultWeek.slice(1) ],
-        "1-3": [ ["공국", "통사", "국사", "공영", "통과", "공수", "정보"], ...defaultWeek.slice(1) ],
-        "2-1": [ ["E", "A", "스생", "D", "B", "대수", "B"], ...defaultWeek.slice(1) ],
-        "2-2": [ ["E", "A", "대수", "D", "스생", "A", "B"], ...defaultWeek.slice(1) ],
-        "2-3": [ ["E", "A", "진로", "D", "대수", "A", "B"], ...defaultWeek.slice(1) ],
-        "3-1": [ ["세시", "영독", "C", "확통", "E", "B", "화작"], ...defaultWeek.slice(1) ],
-        "3-2": [ ["영독", "화작", "C", "세시", "E", "B", "운건"], ...defaultWeek.slice(1) ],
-        "3-3": [ ["영독", "확통", "C", "화작", "E", "B", "세시"], ...defaultWeek.slice(1) ]
+        // 1학년 시간표
+        "1-1": [ ["미술", "공영1", "통과B", "공국1", "정보", "통사1", "공수1"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "1-2": [ ["통과A", "미술", "공수1", "통사1", "국사1", "체육1", "통과B"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "1-3": [ ["공국1", "통사1", "국사1", "공영1", "통과A", "공수1", "정보"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "1-4": [ ["공국1", "국사1", "통과A", "공수1", "공영1", "정보", "통사1"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "1-5": [ ["통사1", "체육1", "공수1", "정보", "미술", "국사1", "공국1"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "1-6": [ ["통과A", "공영1", "과탐1", "통사1", "체육1", "공국1", "공수1"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "1-7": [ ["음악", "국사1", "진로", "공수1", "한문", "공국1", "통사1"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "1-8": [ ["공영1", "공수1", "한문", "통사1", "공국1", "통과A", "국사1"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "1-9": [ ["한문", "음악", "공국1", "공영1", "공수1", "통과B", "통사1"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "1-10": [ ["공수1", "과탐1", "통사1", "음악", "공영1", "진로", "통과A"], emptyDay, emptyDay, emptyDay, emptyDay ],
+
+        // 2학년 시간표
+        "2-1": [ ["지구E", "문학A", "스생1", "사문D", "영어1B", "대수", "화학B"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "2-2": [ ["현윤E", "영어1A", "대수", "물리D", "스생1", "문학A", "심영B"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "2-3": [ ["현윤E", "문학B", "진로", "생명D", "대수", "영어1A", "세지B"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "2-4": [ ["사문E", "대수", "진로", "일본D", "영어1A", "문학B", "주탐B"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "2-5": [ ["프로E", "진로", "영어1A", "세지D", "문학B", "대수", "사문B"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "2-6": [ ["기하E", "스생1", "문학B", "주탐D", "대수", "영어1A", "지구B"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "2-7": [ ["심영E", "문학B", "대수", "세계D", "문학A", "진로", "현윤B"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "2-8": [ ["세지E", "문학A", "스생1", "중국D", "영어1A", "대수", "미매B"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "2-9": [ ["미매E", "대수", "영어1A", "기가D", "진로", "문학B", "일본B"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "2-10": [ ["기가E", "영어1A", "대수", "현윤D", "문학B", "스생1", "생명B"], emptyDay, emptyDay, emptyDay, emptyDay ],
+
+        // 3학년 시간표
+        "3-1": [ ["세시", "영독", "화학2C", "확통", "생과E", "생명2B", "화작"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "3-2": [ ["영독", "화작", "프로C", "세시", "사문E", "생과B", "운건"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "3-3": [ ["영독", "확통", "사탐C", "화작", "정법E", "사문B", "세시"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "3-4": [ ["확통", "세시", "윤사C", "진로", "세지E", "여지B", "운건"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "3-5": [ ["화작", "가정", "사문C", "영독", "윤사E", "사탐B", "확통"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "3-6": [ ["세시", "인공", "여지C", "화작", "사탐E", "확통", "영독"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "3-7": [ ["운건", "일본2", "사문C", "영독", "화학2E", "윤사B", "확통"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "3-8": [ ["확통", "화작", "생명2C", "운건", "생과E", "음감B", "영독"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "3-9": [ ["운건", "확통", "지구2C", "세시", "여지E", "물리2B", "화작"], emptyDay, emptyDay, emptyDay, emptyDay ],
+        "3-10": [ ["화작", "영독", "생과C", "운건", "미감E", "사문B", "가정"], emptyDay, emptyDay, emptyDay, emptyDay ]
     };
 
-    // 2. 6월 전체 급식 DB 완벽 복원
+    // 2. 6월 전체 급식 DB
     const lunchDB = {
         "20260601": "차조밥, 얼큰낙지수제비국, 열무나물무침, 과일탕수육, 호상요구르트",
         "20260602": "곤드레밥, 들깨버섯국, 참외무침, 고등어자반구이, 아이스홍시",
@@ -525,7 +548,6 @@
     function setLunchMenu() {
         let dateObj = new Date();
         
-        // 똑똑한 기능: 만약 토요일(6)이나 일요일(0)에 접속하면 다가오는 월요일 급식을 보여줌!
         if (dateObj.getDay() === 6) dateObj.setDate(dateObj.getDate() + 2);
         if (dateObj.getDay() === 0) dateObj.setDate(dateObj.getDate() + 1);
 
@@ -573,26 +595,35 @@
 
         const tbody = document.getElementById("timetableBody");
         tbody.innerHTML = ""; 
-        const weekData = timetableDB[key] || defaultWeek;
-        const days = ["월", "화", "수", "목", "금"];
+        
+        // 데이터 없으면 에러 안나게 빈칸 배열 생성
+        const weekData = timetableDB[key] || [emptyDay, emptyDay, emptyDay, emptyDay, emptyDay];
 
-        weekData.forEach((daySchedule, index) => {
+        // 가독성 100% 확보된 세로형(교시 기준) 렌더링 로직
+        for (let period = 0; period < 7; period++) {
             const tr = document.createElement("tr");
+            
+            // 1교시, 2교시 타이틀
             const th = document.createElement("th");
-            th.innerText = days[index];
+            th.innerText = `${period + 1}교시`;
             tr.appendChild(th);
 
-            daySchedule.forEach(subject => {
+            // 월,화,수,목,금 순서대로 채우기
+            for (let day = 0; day < 5; day++) {
+                const subject = weekData[day][period] || "";
                 const td = document.createElement("td");
-                if (subject.length === 1 && subject.match(/[A-Z]/)) {
-                    td.innerHTML = `<span class="elective">${subject}</span>`;
+                
+                // ★원하셨던 완벽한 로직!★ 
+                // 원본 글자(예: "지구E")를 찾아서, 2,3학년 선택과목의 마지막 글자가 A~E로 끝나면 그 알파벳만 예쁘게 뽑아서 출력!
+                if (grade !== "1" && subject.match(/[A-E]$/)) {
+                    td.innerHTML = `<span class="elective">${subject.slice(-1)}</span>`;
                 } else {
-                    td.innerText = subject;
+                    td.innerText = subject; // 1학년이거나, 일반 과목(예: 대수, 국어)이면 원본 그대로 출력
                 }
                 tr.appendChild(td);
-            });
+            }
             tbody.appendChild(tr);
-        });
+        }
 
         document.getElementById("loginView").classList.add("hidden");
         document.getElementById("dashboardView").classList.remove("hidden");
@@ -610,7 +641,6 @@
     function openModal(id) {
         const modal = document.getElementById(id);
         modal.classList.remove("hidden");
-        // 약간의 딜레이를 주어 CSS 트랜지션 애니메이션이 작동하도록 함
         setTimeout(() => modal.classList.add("active"), 10);
     }
     function closeModal(id) {
