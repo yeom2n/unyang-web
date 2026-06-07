@@ -5,30 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>운양고 School-Hub</title>
     <style>
-        /* 기본 라이트 모드 */
+        /* 🎨 프리미엄 UI 색상 변수 */
         :root {
-            --bg-color: #F1F5F9;
-            --text-color: #1E293B;
+            --bg-color: #F3F4F6;
+            --text-color: #1F2937;
             --card-bg: #FFFFFF;
-            --primary-color: #3B82F6;
-            --secondary-color: #64748B;
-            --border-color: #E2E8F0;
-            --hover-bg: #EFF6FF;
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --secondary: #6B7280;
+            --border: #E5E7EB;
+            --accent-lunch: #10B981;
+            --accent-exam: #EF4444;
+            --radius: 20px;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* 다크 모드 */
+        /* 🌙 다크 모드 프리미엄 색상 */
         body.dark-mode {
-            --bg-color: #0F172A;
-            --text-color: #F8FAFC;
-            --card-bg: #1E293B;
-            --primary-color: #3B82F6;
-            --secondary-color: #94A3B8;
-            --border-color: #334155;
-            --hover-bg: #1E293B;
+            --bg-color: #111827;
+            --text-color: #F9FAFB;
+            --card-bg: #1F2937;
+            --primary: #6366F1;
+            --primary-hover: #818CF8;
+            --secondary: #9CA3AF;
+            --border: #374151;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
         }
 
         body {
-            font-family: 'Malgun Gothic', sans-serif;
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
@@ -36,301 +42,439 @@
             display: flex;
             justify-content: center;
             min-height: 100vh;
-            transition: 0.3s;
+            transition: var(--transition);
         }
 
-        .container {
+        .app-container {
             width: 100%;
-            max-width: 900px; 
+            max-width: 850px; 
+            margin: auto;
+        }
+
+        /* 뷰 컨테이너 */
+        .view-box {
             background-color: var(--card-bg);
             padding: 40px;
-            border-radius: 24px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-            border: 1px solid var(--border-color);
-            box-sizing: border-box;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: var(--transition);
         }
 
-        h2 { color: var(--primary-color); margin-top: 0; }
-        
-        .header-bar {
+        @media (max-width: 600px) {
+            .view-box { padding: 25px 20px; }
+            body { padding: 10px; }
+        }
+
+        h1, h2, h3, h4 { margin-top: 0; }
+        .text-primary { color: var(--primary); }
+
+        /* 입력 폼 디자인 */
+        .input-group {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            border-bottom: 3px solid var(--primary-color);
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-            flex-wrap: wrap; /* 화면 좁을 때 줄바꿈 */
-            gap: 10px;
+            gap: 15px;
+            margin: 30px 0;
         }
-
-        select, button {
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
+        
+        select {
+            flex: 1;
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid var(--border);
             background-color: var(--bg-color);
             color: var(--text-color);
             font-size: 16px;
+            font-weight: 600;
             outline: none;
+            transition: var(--transition);
             cursor: pointer;
+            appearance: none; /* 기본 화살표 제거 */
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
         }
+        select:focus { border-color: var(--primary); }
 
-        .btn-submit {
-            width: 100%;
-            background-color: var(--primary-color);
+        .btn {
+            background-color: var(--primary);
             color: white;
-            font-weight: bold;
+            font-weight: 700;
             border: none;
-            margin-top: 20px;
-            padding: 15px;
-            font-size: 18px;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
+        .btn:hover { background-color: var(--primary-hover); transform: translateY(-2px); }
+        .btn-full { width: 100%; font-size: 18px; padding: 18px; }
 
-        .grid-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .grid-container { grid-template-columns: 1fr; }
-            .container { padding: 20px; }
-            .dday-badge { margin-top: 5px; display: inline-block; }
-        }
-
-        .card {
-            padding: 20px;
-            border-radius: 16px;
-            background-color: var(--bg-color);
-            border: 1px solid var(--border-color);
-            position: relative;
-        }
-
-        .card h4 {
-            margin: 0 0 15px 0;
-            font-size: 18px;
-            color: var(--primary-color);
+        /* 대시보드 헤더 */
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
+        .header-title { font-size: 28px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+        .class-tag { background: var(--bg-color); padding: 5px 12px; border-radius: 10px; font-size: 16px; color: var(--primary); border: 1px solid var(--border); }
 
-        .btn-sm {
-            background-color: #E2E8F0;
-            color: #475569;
-            border: none;
-            padding: 5px 12px;
-            font-size: 12px;
+        /* D-Day 뱃지 */
+        .badges { display: flex; gap: 10px; flex-wrap: wrap; }
+        .badge {
+            padding: 6px 14px;
             border-radius: 20px;
-            font-weight: bold;
+            font-size: 13px;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
-        body.dark-mode .btn-sm { background-color: #475569; color: #F1F5F9; }
+        .b-vacation { background: linear-gradient(135deg, #F59E0B, #D97706); }
+        .b-csat { background: linear-gradient(135deg, #EF4444, #B91C1C); }
 
+        /* 그리드 카드 레이아웃 */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+
+        .card {
+            background-color: var(--bg-color);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .btn-icon {
+            background: var(--card-bg); color: var(--text-color);
+            border: 1px solid var(--border); padding: 6px 12px;
+            border-radius: 20px; font-size: 12px; font-weight: 600;
+            cursor: pointer; transition: 0.2s;
+        }
+        .btn-icon:hover { background: var(--border); }
+
+        /* 시간표 테이블 */
+        .table-container { overflow-x: auto; }
         table {
             width: 100%;
-            border-collapse: collapse;
-            font-size: 16px;
-            background-color: var(--card-bg);
+            border-collapse: separate;
+            border-spacing: 0;
+            min-width: 600px;
         }
         th, td {
-            border: 1px solid var(--border-color);
-            padding: 12px;
+            padding: 15px 10px;
             text-align: center;
+            border-bottom: 1px solid var(--border);
         }
-        th { background-color: var(--hover-bg); color: var(--secondary-color); }
+        th { font-weight: 700; color: var(--secondary); padding-bottom: 20px; }
+        td { font-weight: 600; }
         
-        /* D-Day 뱃지 공통 스타일 */
-        .dday-badge {
-            color: white;
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-size: 14px;
-            margin-left: 10px;
-            font-weight: bold;
-            vertical-align: middle;
+        .elective {
+            background: var(--primary); color: white;
+            padding: 6px 12px; border-radius: 10px; font-weight: 800;
+            display: inline-block; box-shadow: 0 2px 4px rgba(79, 70, 229, 0.3);
         }
 
-        /* 여름방학 뱃지 (오렌지색) */
-        .vacation-badge {
-            background-color: #F59E0B;
-            box-shadow: 0 4px 6px rgba(245, 158, 11, 0.2);
+        /* 모달 팝업 */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 1000; opacity: 0; visibility: hidden; transition: 0.3s;
         }
-        body.dark-mode .vacation-badge { background-color: #D97706; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        
+        .modal-content {
+            background: var(--card-bg); width: 90%; max-width: 700px;
+            max-height: 85vh; border-radius: 24px; padding: 30px;
+            overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: translateY(20px); transition: 0.3s;
+        }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
 
-        /* 수능 뱃지 (붉은색) */
-        .csat-badge {
-            background-color: #E11D48;
-            box-shadow: 0 4px 6px rgba(225, 29, 72, 0.2);
-        }
-        body.dark-mode .csat-badge { background-color: #BE123C; }
-
-        .elective-badge {
-            background-color: #E0E7FF; color: #3730A3;
-            padding: 5px 10px; border-radius: 8px; font-weight: 900;
-        }
-        body.dark-mode .elective-badge { background-color: #3730A3; color: #E0E7FF; }
+        /* 기말고사 전용 테이블 */
+        .exam-table th { background: var(--bg-color); border: 1px solid var(--border); }
+        .exam-table td { border: 1px solid var(--border); font-size: 13px; padding: 10px; }
+        .exam-badge { background: #FEE2E2; color: #991B1B; padding: 3px 8px; border-radius: 6px; font-size: 11px; margin-bottom:4px; display:inline-block; }
+        body.dark-mode .exam-badge { background: #7F1D1D; color: #FECACA; }
 
         .hidden { display: none !important; }
-
-        .exam-card {
-            background: linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 100%);
-            border: 1px solid #FECDD3;
-        }
-        body.dark-mode .exam-card {
-            background: linear-gradient(135deg, #4C1D95 0%, #312E81 100%);
-            border: 1px solid #4338CA;
-        }
-
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 1000;
-        }
-        .modal-content {
-            background: var(--card-bg);
-            padding: 30px; border-radius: 20px;
-            width: 90%; max-width: 600px;
-            max-height: 80vh; overflow-y: auto;
-        }
-        .modal-close {
-            background: #EF4444; color: white; border: none;
-            padding: 10px 20px; border-radius: 8px; cursor: pointer;
-            float: right; font-weight: bold;
-        }
+        
+        /* 스크롤바 커스텀 */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="app-container">
     
-    <!-- 1. 초기 접속 화면 -->
-    <div id="loginView">
-        <h2 style="font-size: 28px; text-align: center;">🏫 운양고 School-Hub</h2>
-        <p style="text-align: center; font-size: 16px; color: var(--secondary-color);">학년과 반을 선택하고 입장하세요.</p>
+    <!-- 1. 로그인 뷰 -->
+    <div id="loginView" class="view-box">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <div style="font-size: 50px; margin-bottom: 10px;">🏫</div>
+            <h1 class="text-primary" style="font-size: 32px; font-weight: 900;">운양고 School-Hub</h1>
+            <p style="color: var(--secondary); font-size: 16px;">우리 학교의 모든 정보를 한 곳에서 확인하세요.</p>
+        </div>
         
-        <div style="display: flex; gap: 10px; margin-top: 30px;">
+        <div class="input-group">
             <select id="gradeSelect">
                 <option value="1">1학년</option>
                 <option value="2" selected>2학년</option>
                 <option value="3">3학년</option>
             </select>
-            
             <select id="classSelect">
-                <option value="1">1반</option>
-                <option value="2">2반</option>
-                <option value="3">3반</option>
-                <option value="4">4반</option>
-                <option value="5">5반</option>
-                <option value="6">6반</option>
-                <option value="7">7반</option>
-                <option value="8">8반</option>
-                <option value="9">9반</option>
-                <option value="10">10반</option>
+                <option value="1">1반</option><option value="2">2반</option>
+                <option value="3">3반</option><option value="4">4반</option>
+                <option value="5">5반</option><option value="6">6반</option>
+                <option value="7">7반</option><option value="8">8반</option>
+                <option value="9">9반</option><option value="10">10반</option>
             </select>
         </div>
-        <button class="btn-submit" onclick="enterApp()">앱 접속하기</button>
+        <button class="btn btn-full" onclick="enterApp()">🚀 나의 대시보드 입장하기</button>
     </div>
 
-    <!-- 2. 메인 대시보드 화면 -->
-    <div id="dashboardView" class="hidden">
+    <!-- 2. 대시보드 뷰 -->
+    <div id="dashboardView" class="view-box hidden">
         
-        <div class="header-bar">
+        <div class="header">
             <div>
-                <h2 style="margin: 0; font-size: 26px; display: inline-block;">운양고 대시보드</h2>
-                <span style="font-weight: bold; color: var(--secondary-color); margin-left: 10px;" id="userClassInfo"></span>
-                <br> <!-- 모바일에서 너무 좁으면 줄바꿈 되도록 추가 -->
-                <!-- 방학 D-Day 뱃지 -->
-                <span id="vacationBadge" class="dday-badge vacation-badge"></span>
-                <!-- 수능 D-Day 뱃지 -->
-                <span id="csatBadge" class="dday-badge csat-badge"></span>
+                <div class="header-title">
+                    운양고 대시보드 <span class="class-tag" id="userClassInfo">2학년 3반</span>
+                </div>
+                <div class="badges" style="margin-top: 10px;">
+                    <span id="vacationBadge" class="badge b-vacation">🌴 방학 D-Day</span>
+                    <span id="csatBadge" class="badge b-csat">🎯 수능 D-Day</span>
+                </div>
             </div>
-            <div>
-                <button onclick="toggleDarkMode()">🌙 다크 모드</button>
-                <button onclick="logout()">뒤로 가기</button>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-icon" onclick="toggleDarkMode()">🌓 테마변경</button>
+                <button class="btn-icon" onclick="logout()">🚪 로그아웃</button>
             </div>
         </div>
 
-        <div class="grid-container">
-            <!-- 급식표 -->
-            <div class="card">
-                <h4 style="color: #10B981;">
-                    🍱 오늘의 급식
-                    <button class="btn-sm" onclick="openModal('lunchModal')">전체 일정 ➕</button>
-                </h4>
-                <p style="font-size: 16px; font-weight: bold; line-height: 1.6;" id="lunchContent">데이터를 불러오는 중...</p>
+        <div class="grid-2">
+            <!-- 급식 카드 -->
+            <div class="card" style="border-left: 5px solid var(--accent-lunch);">
+                <div class="card-header">
+                    <span style="color: var(--accent-lunch);">🍱 <span id="lunchTitle">오늘의 급식</span></span>
+                    <button class="btn-icon" onclick="openModal('lunchModal')">식단표 보기</button>
+                </div>
+                <p id="lunchContent" style="font-size: 16px; line-height: 1.6; font-weight: 700; margin:0;">데이터 로딩중...</p>
             </div>
 
-            <!-- 학사 일정 -->
-            <div class="card">
-                <h4>
-                    📅 이달의 학사 일정
-                    <button class="btn-sm" onclick="openModal('calendarModal')">전체 일정 ➕</button>
-                </h4>
-                <p style="font-size: 15px; line-height: 1.8; margin: 0;">
-                    • 6/4(목): 1,2,3학년 전국연합학력평가
-                </p>
+            <!-- 학사일정 카드 -->
+            <div class="card" style="border-left: 5px solid var(--primary);">
+                <div class="card-header">
+                    <span class="text-primary">📅 최근 학사 일정</span>
+                    <button class="btn-icon" onclick="openModal('calendarModal')">연간 일정 보기</button>
+                </div>
+                <ul style="margin: 0; padding-left: 20px; line-height: 1.8; font-weight: 600; font-size: 15px;">
+                    <li>6/4(목): 전국연합학력평가</li>
+                    <li>6/5(금): 월요일 수업 진행</li>
+                    <li>6/24(수) ~ 7/1(수): 기말고사</li>
+                </ul>
             </div>
-
         </div>
 
-        <div class="card exam-card">
-            <h4 style="color: #E11D48; margin-bottom: 10px;">📝 2차 정기시험(기말고사) 안내</h4>
-            <p style="margin: 0; font-size: 15px; line-height: 1.6;">
-                <strong>기간:</strong> 6/24(수) ~ 7/1(수)<br>
-                <em>상세 시험 시간표를 업데이트할 예정입니다. (데이터 대기 중 ⏳)</em>
-            </p>
+        <!-- 기말고사 특별 카드 -->
+        <div class="card" style="background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(239,68,68,0.02)); border-color: rgba(239,68,68,0.2); margin-bottom: 20px;">
+            <div class="card-header" style="margin-bottom: 5px;">
+                <span style="color: var(--accent-exam);">📝 1학기 2차 정기시험(기말고사)</span>
+                <button class="btn" style="padding: 8px 16px; font-size: 13px; background: var(--accent-exam);" onclick="openModal('examModal')">전학년 시간표 확인</button>
+            </div>
+            <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--secondary);">기간: 2026. 6. 24(수) ~ 7. 1(수)</p>
         </div>
 
-        <div class="card" style="margin-top: 20px;">
-            <h4 style="margin-bottom: 15px;">⏱️ 이번 주 시간표</h4>
-            <table>
-                <thead>
+        <!-- 시간표 카드 -->
+        <div class="card">
+            <div class="card-header">⏱️ 우리 반 주간 시간표</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>요일</th><th>1교시</th><th>2교시</th><th>3교시</th><th>4교시</th><th>5교시</th><th>6교시</th><th>7교시</th>
+                        </tr>
+                    </thead>
+                    <tbody id="timetableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ================= 모달 영역 ================= -->
+
+<!-- 1. 급식 모달 -->
+<div id="lunchModal" class="modal-overlay">
+    <div class="modal-content">
+        <h2 style="color: var(--accent-lunch); border-bottom: 2px solid var(--border); padding-bottom: 15px;">🍱 6월 전체 급식 식단표</h2>
+        <div style="line-height: 1.8; font-size: 15px; font-weight: 600;">
+            <p><strong>[1주차]</strong><br>
+            6/1(월): 차조밥, 얼큰낙지수제비국, 열무나물무침, 과일탕수육, 호상요구르트<br>
+            6/2(화): 곤드레밥, 들깨버섯국, 참외무침, 고등어자반구이, 아이스홍시<br>
+            6/3(수): 지방선거일 (휴일)<br>
+            6/4(목): 사천짜장밥, 김치콩나물국, 양상추샐러드, 새우꼬치, 멜론<br>
+            6/5(금): 찰보리밥, 닭한마리, 양파부추초절임, 고기지질, 겉절이, 레몬에이드</p><hr style="border:0; border-top:1px dashed var(--border); margin:15px 0;">
+            
+            <p><strong>[2주차]</strong><br>
+            6/8(월): 귀리밥, 부추순대국, 청포묵무침, 마파두부, 총각김치, 수박<br>
+            6/9(화): 잡곡밥, 우동국, 치즈불닭, 피자고로케, 배추김치, 샤베트<br>
+            6/10(수): 찰옥수수밥, 근대된장국, 오징어삼겹살볶음, 고구마치즈오믈렛, 골드키위<br>
+            6/11(목): 찰현미밥, 한우샤브샤브국, 코다리조림, 미역오이무침, 청포도<br>
+            6/12(금): 훈제오리볶음밥, 게살달걀국, 시리얼그린샐러드, 핫도그, 자두주스</p><hr style="border:0; border-top:1px dashed var(--border); margin:15px 0;">
+            
+            <p><strong>[3주차]</strong><br>
+            6/15(월): 칼슘기장밥, 육개장, 치즈블럭돈카츠, 알감자버터구이, 사과<br>
+            6/16(화): 들기름막국수, 돼지고기채소오븐구이, 메밀전병, 보쌈김치, 요거톡<br>
+            6/17(수): 잡곡밥, 쇠고기무국, 진미채야채무침, 마라부대볶음, 배추김치, 멜론<br>
+            6/18(목): 차수수밥, 순두부찌개, 메추리알곤약조림, 트러플양송이크림함박, 요구르트<br>
+            6/19(금): 발아흑미밥, 건새우아욱된장국, 닭볶음탕, 콩나물파채무침, 수리취꿀떡</p><hr style="border:0; border-top:1px dashed var(--border); margin:15px 0;">
+            
+            <p><strong>[4주차 및 시험기간]</strong><br>
+            6/22(월): 스팸마요덮밥, 가쓰오장국, 돈육후라이드, 블루베리치즈와플<br>
+            6/23(화): 율무밥, 황도그린샐러드, 시금치프리타타, 과일젤리<br>
+            6/24(수) ~ 6/30(화): <span style="color:var(--accent-lunch);">기말고사 기간 급식 정상 운영</span><br>
+            7/1(수): 기말고사 마지막 날 <span style="color:var(--accent-exam);">(급식 없음)</span></p>
+        </div>
+        <div style="text-align: right; margin-top: 20px;"><button class="btn" onclick="closeModal('lunchModal')">닫기</button></div>
+    </div>
+</div>
+
+<!-- 2. 학사일정 모달 -->
+<div id="calendarModal" class="modal-overlay">
+    <div class="modal-content">
+        <h2 class="text-primary" style="border-bottom: 2px solid var(--border); padding-bottom: 15px;">📅 2026학년도 1학기 주요 학사일정</h2>
+        <ul style="line-height: 2.0; font-size: 15px; font-weight: 600; padding-left: 20px;">
+            <li><strong>3월 2일:</strong> 입학식 및 개학식</li>
+            <li><strong>3월 24일:</strong> 1,2,3학년 전국연합학력평가</li>
+            <li><strong>4월 23일 ~ 28일:</strong> 1차 정기시험 (중간고사)</li>
+            <li><strong>5월 4일:</strong> 학교장 재량휴업일</li>
+            <li><strong>5월 14일:</strong> 온빛스포츠데이 (체육대회)</li>
+            <li><strong>5월 15일:</strong> 학교장 재량휴업일</li>
+            <li><strong>6월 3일:</strong> 제8회 지방선거 (휴일)</li>
+            <li><strong>6월 4일:</strong> 전국연합학력평가 및 대수능모의평가</li>
+            <li><strong>6월 5일:</strong> 월요일 수업 진행</li>
+            <li><strong>6월 24일 ~ 7월 1일:</strong> <span style="color:var(--accent-exam);">2차 정기시험 (기말고사)</span></li>
+            <li><strong>7월 7일:</strong> 3학년 전국연합학력평가</li>
+            <li><strong>7월 22일:</strong> <span style="color:var(--accent-lunch);">여름 방학식 🌴</span></li>
+        </ul>
+        <div style="text-align: right; margin-top: 20px;"><button class="btn" onclick="closeModal('calendarModal')">닫기</button></div>
+    </div>
+</div>
+
+<!-- 3. 기말고사 시간표 모달 -->
+<div id="examModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 900px;">
+        <h2 style="color: var(--accent-exam); border-bottom: 2px solid var(--border); padding-bottom: 15px;">📝 1학기 2차 정기시험 시간표 (전학년)</h2>
+        <div class="table-container">
+            <table class="exam-table" style="width: 100%; text-align: center; border-collapse: collapse; min-width: 700px;">
+                <thead style="background: var(--bg-color); font-weight: bold;">
                     <tr>
-                        <th>요일</th><th>1교시</th><th>2교시</th><th>3교시</th><th>4교시</th><th>5교시</th><th>6교시</th><th>7교시</th>
+                        <th rowspan="2">날짜</th>
+                        <th colspan="3">6/24(수)</th>
+                        <th colspan="3">6/25(목)</th>
+                        <th colspan="3">6/26(금)</th>
+                    </tr>
+                    <tr>
+                        <th>1학년</th><th>2학년</th><th>3학년</th>
+                        <th>1학년</th><th>2학년</th><th>3학년</th>
+                        <th>1학년</th><th>2학년</th><th>3학년</th>
                     </tr>
                 </thead>
-                <tbody id="timetableBody">
+                <tbody>
+                    <tr>
+                        <td><strong>1교시</strong><br>(09:20)</td>
+                        <td>자습</td><td>심화영어</td><td>미적분</td>
+                        <td>자습</td><td>일본어I</td><td>세계지리</td>
+                        <td>자습</td><td>세계시민<br>과지리</td><td>자습</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2교시</strong><br>(10:30)</td>
+                        <td>자습</td><td>기하</td><td>심화국어</td>
+                        <td>정보/<br>한문</td><td>생명과학I</td><td>자습</td>
+                        <td>자습</td><td>물리학I</td><td>가정/인공/<br>일본2/중국2</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3교시</strong><br>(11:40)</td>
+                        <td><span class="exam-badge">공통수학1</span></td>
+                        <td><span class="exam-badge">영어I</span></td>
+                        <td><span class="exam-badge">화법과작문</span></td>
+                        <td><span class="exam-badge">공통영어1</span></td>
+                        <td><span class="exam-badge">대수</span></td>
+                        <td><span class="exam-badge">확률과통계</span></td>
+                        <td><span class="exam-badge">통합과학1</span></td>
+                        <td><span class="exam-badge">현대사회<br>와윤리</span></td>
+                        <td><span class="exam-badge">지구과학II</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <table class="exam-table" style="width: 100%; text-align: center; border-collapse: collapse; min-width: 700px; margin-top: 20px;">
+                <thead style="background: var(--bg-color); font-weight: bold;">
+                    <tr>
+                        <th rowspan="2">날짜</th>
+                        <th colspan="3">6/29(월)</th>
+                        <th colspan="3">6/30(화)</th>
+                        <th colspan="3">7/1(수)</th>
+                    </tr>
+                    <tr>
+                        <th>1학년</th><th>2학년</th><th>3학년</th>
+                        <th>1학년</th><th>2학년</th><th>3학년</th>
+                        <th>1학년</th><th>2학년</th><th>3학년</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1교시</strong><br>(09:20)</td>
+                        <td>자습</td><td>화학I</td><td>정치와법</td>
+                        <td>자습</td><td>지구과학I</td><td>윤리와사상</td>
+                        <td>자습</td><td>프로그래밍</td><td>화학II</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2교시</strong><br>(10:30)</td>
+                        <td>자습</td><td>사회문화</td><td>사회문화</td>
+                        <td>자습</td><td>기술가정</td><td>자습</td>
+                        <td>자습</td><td>세계사</td><td>세계사</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3교시</strong><br>(11:40)</td>
+                        <td><span class="exam-badge">통합사회1</span></td>
+                        <td><span class="exam-badge">중국어I</span></td>
+                        <td><span class="exam-badge">물리학II</span></td>
+                        <td><span class="exam-badge">공통국어1</span></td>
+                        <td><span class="exam-badge">주제탐구/<br>독서</span></td>
+                        <td><span class="exam-badge">생명과학II</span></td>
+                        <td><span class="exam-badge">한국사1</span></td>
+                        <td><span class="exam-badge">문학</span></td>
+                        <td><span class="exam-badge">영독작</span></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
-
-    </div>
-</div>
-
-<!-- 1. 급식 전체보기 모달 (다시 깔끔한 텍스트 모드로 복구!) -->
-<div id="lunchModal" class="modal-overlay hidden">
-    <div class="modal-content">
-        <h3 style="color: #10B981; margin-top: 0;">🍱 6월 전체 급식 식단표</h3>
-        <p style="line-height: 1.6; font-size: 14px;">
-            <strong>6/1(월) ~ 6/12(금):</strong> 급식표 참고 후 입력<br><hr>
-            <strong>6/4(목):</strong> 1,2,3학년 전국연합학력평가<br><hr>
-            <strong>6/15(월):</strong> 발아흑미밥, 건새우아욱된장국, 닭볶음탕, 알감자버터구이, 섞박지, 사과<br><hr>
-            <strong>6/16(화):</strong> 스팸마요덮밥, 콩나물김칫국, 메밀전병, 보쌈김치, 요거톡<br><hr>
-            <strong>6/17(수):</strong> 칼슘강화밥, 순두부찌개, 마라부대볶음, 배추김치, 멜론<br><hr>
-            <strong>6/18(목):</strong> 차수수밥, 근대된장국, 트러플양송이크림함박, 열무김치, 요구르트<br><hr>
-            <strong>6/19(금):</strong> 보리밥, 쇠고기미역국, 콩나물파채무침, 배추김치, 수리취꿀떡<br><hr>
-            <strong>6/22(월) ~ 6/23(화):</strong> 식단표 참고 후 추가 가능<br><hr>
-            <strong>6/24(수) ~ 6/30(화):</strong> 2차 정기시험(기말고사) - <b style="color:#10B981;">급식 정상 운영 (메뉴 업데이트 예정)</b><br><hr>
-            <strong>7/1(수):</strong> 2차 정기시험 마지막 날 - <b style="color:#EF4444;">급식 없음</b>
-        </p>
-        <button class="modal-close" onclick="closeModal('lunchModal')">닫기</button>
-    </div>
-</div>
-
-<!-- 2. 학사일정 전체보기 모달 -->
-<div id="calendarModal" class="modal-overlay hidden">
-    <div class="modal-content">
-        <h3 style="color: var(--primary-color); margin-top: 0;">📅 6월 학사 일정 상세</h3>
-        <ul style="line-height: 1.8; font-size: 15px;">
-            <li><strong>6월 4일(목):</strong> 1, 2, 3학년 전국연합학력평가</li>
-            <li><strong>6월 24일(수) ~ 7월 1일(수):</strong> 1학기 2차 정기시험(기말고사) 실시</li>
-        </ul>
-        <button class="modal-close" onclick="closeModal('calendarModal')">닫기</button>
+        <div style="text-align: right; margin-top: 20px;"><button class="btn" onclick="closeModal('examModal')">닫기</button></div>
     </div>
 </div>
 
 <script>
+    // 1. 시간표 DB (월~금)
     const defaultWeek = [
         ["국어", "수학", "영어", "체육", "창체", "창체", "창체"], 
         ["영어", "수학", "과학", "사회", "미술", "음악", "진로"], 
@@ -351,87 +495,89 @@
         "3-3": [ ["영독", "확통", "C", "화작", "E", "B", "세시"], ...defaultWeek.slice(1) ]
     };
 
-    // 시험 기간(24일~30일)은 급식이 나오므로 데이터 수정!
+    // 2. 6월 전체 급식 DB 완벽 복원
     const lunchDB = {
-        "20260604": "전국연합학력평가",
-        "20260615": "발아흑미밥, 건새우아욱된장국, 닭볶음탕, 알감자버터구이, 섞박지, 사과",
-        "20260616": "스팸마요덮밥, 콩나물김칫국, 메밀전병, 보쌈김치, 요거톡",
-        "20260617": "칼슘강화밥, 순두부찌개, 마라부대볶음, 배추김치, 멜론",
-        "20260618": "차수수밥, 근대된장국, 트러플양송이크림함박, 열무김치, 요구르트",
-        "20260619": "보리밥, 쇠고기미역국, 콩나물파채무침, 배추김치, 수리취꿀떡",
-        "20260624": "기말고사 1일차 (급식 정상 운영 - 메뉴 업데이트 예정)",
-        "20260625": "기말고사 2일차 (급식 정상 운영 - 메뉴 업데이트 예정)",
-        "20260626": "기말고사 3일차 (급식 정상 운영 - 메뉴 업데이트 예정)",
-        "20260629": "기말고사 4일차 (급식 정상 운영 - 메뉴 업데이트 예정)",
-        "20260630": "기말고사 5일차 (급식 정상 운영 - 메뉴 업데이트 예정)",
+        "20260601": "차조밥, 얼큰낙지수제비국, 열무나물무침, 과일탕수육, 호상요구르트",
+        "20260602": "곤드레밥, 들깨버섯국, 참외무침, 고등어자반구이, 아이스홍시",
+        "20260603": "지방선거일 (휴일)",
+        "20260604": "사천짜장밥, 김치콩나물국, 양상추샐러드, 새우꼬치, 멜론",
+        "20260605": "찰보리밥, 닭한마리, 양파부추초절임, 고기지질, 겉절이, 레몬에이드",
+        "20260608": "귀리밥, 부추순대국, 청포묵무침, 마파두부, 총각김치, 수박",
+        "20260609": "잡곡밥, 우동국, 치즈불닭, 피자고로케, 배추김치, 샤베트",
+        "20260610": "찰옥수수밥, 근대된장국, 오징어삼겹살볶음, 고구마치즈오믈렛, 골드키위",
+        "20260611": "찰현미밥, 한우샤브샤브국, 코다리조림, 미역오이무침, 청포도",
+        "20260612": "훈제오리볶음밥, 게살달걀국, 시리얼그린샐러드, 핫도그, 자두주스",
+        "20260615": "칼슘기장밥, 육개장, 치즈블럭돈카츠, 알감자버터구이, 사과",
+        "20260616": "들기름막국수, 돼지고기채소오븐구이, 메밀전병, 보쌈김치, 요거톡",
+        "20260617": "잡곡밥, 쇠고기무국, 진미채야채무침, 마라부대볶음, 배추김치, 멜론",
+        "20260618": "차수수밥, 순두부찌개, 메추리알곤약조림, 트러플양송이크림함박, 요구르트",
+        "20260619": "발아흑미밥, 건새우아욱된장국, 닭볶음탕, 콩나물파채무침, 수리취꿀떡",
+        "20260622": "스팸마요덮밥, 가쓰오장국, 돈육후라이드, 블루베리치즈와플",
+        "20260623": "율무밥, 황도그린샐러드, 시금치프리타타, 과일젤리",
+        "20260624": "발아현미밥, 된장찌개, 쭈꾸미볶음, 청경채사과무침, 귤 (기말 1일차)",
+        "20260625": "미니김치말이국수, 옹심이감자국, 돼지갈비떡찜, 열무김치 (기말 2일차)",
+        "20260626": "차수수밥, 바베큐닭봉구이, 한우설렁탕, 마늘쫑멸치볶음, 수박 (기말 3일차)",
+        "20260629": "목살필라프, 미소된장국, 샐러드파스타, 크림치즈타르트, 포도 (기말 4일차)",
+        "20260630": "찰흑미밥, 부대찌개, 고구마순된장무침, 깐풍기, 사과주스 (기말 5일차)",
         "20260701": "기말고사 마지막 날 (급식 없음)"
     };
 
     function setLunchMenu() {
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2, '0');
-        const day = String(today.getDate()).padStart(2, '0');
-        const todayStr = `${year}${month}${day}`;
+        let dateObj = new Date();
+        
+        // 똑똑한 기능: 만약 토요일(6)이나 일요일(0)에 접속하면 다가오는 월요일 급식을 보여줌!
+        if (dateObj.getDay() === 6) dateObj.setDate(dateObj.getDate() + 2);
+        if (dateObj.getDay() === 0) dateObj.setDate(dateObj.getDate() + 1);
 
-        if (lunchDB[todayStr]) {
-            document.getElementById("lunchContent").innerText = lunchDB[todayStr];
+        const year = dateObj.getFullYear();
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        const searchDate = `${year}${month}${day}`;
+
+        document.getElementById("lunchTitle").innerText = `${month}/${day} 급식`;
+        
+        if (lunchDB[searchDate]) {
+            document.getElementById("lunchContent").innerText = lunchDB[searchDate];
         } else {
-            // 기본 테스트용으로 15일 급식을 보여줍니다
-            document.getElementById("lunchContent").innerText = lunchDB["20260615"]; 
+            document.getElementById("lunchContent").innerText = "해당 날짜의 급식 정보가 없습니다.";
         }
     }
 
-    // 디데이 계산 통합 함수 (방학 & 수능)
     function calculateDdays() {
         const today = new Date();
-        today.setHours(0, 0, 0, 0); // 시간 오차 보정
+        today.setHours(0, 0, 0, 0); 
         
-        // 1. 🌴 여름방학 D-Day (2026년 7월 22일 기준)
-        const vacationDate = new Date("2026-07-22T00:00:00");
-        const diffDaysVacation = Math.ceil((vacationDate - today) / (1000 * 60 * 60 * 24));
-        const vacationElement = document.getElementById("vacationBadge");
+        const vacDate = new Date("2026-07-22T00:00:00");
+        const vacDiff = Math.ceil((vacDate - today) / (1000 * 60 * 60 * 24));
+        const vacEl = document.getElementById("vacationBadge");
+        if (vacDiff > 0) vacEl.innerText = `🌴 방학 D-${vacDiff}`;
+        else if (vacDiff === 0) vacEl.innerText = `🌴 여름방학 시작! 🎉`;
+        else vacEl.innerText = `🌴 방학 중!`;
 
-        if (diffDaysVacation > 0) {
-            vacationElement.innerText = `🌴 방학 D-${diffDaysVacation}`;
-        } else if (diffDaysVacation === 0) {
-            vacationElement.innerText = `🌴 여름방학 시작! 🎉`;
-        } else {
-            vacationElement.innerText = `🌴 달콤한 방학 중!`;
-        }
-
-        // 2. 🎯 수능 D-Day (2026년 11월 19일 기준, 오늘부터 딱 165일)
         const csatDate = new Date("2026-11-19T00:00:00");
-        const diffDaysCsat = Math.ceil((csatDate - today) / (1000 * 60 * 60 * 24));
-        const csatElement = document.getElementById("csatBadge");
-
-        if (diffDaysCsat > 0) {
-            csatElement.innerText = `🎯 수능 D-${diffDaysCsat}`;
-        } else if (diffDaysCsat === 0) {
-            csatElement.innerText = `🎯 수능 당일! 파이팅!`;
-        } else {
-            csatElement.innerText = `🎯 수능 종료!`;
-        }
+        const csatDiff = Math.ceil((csatDate - today) / (1000 * 60 * 60 * 24));
+        const csatEl = document.getElementById("csatBadge");
+        if (csatDiff > 0) csatEl.innerText = `🎯 수능 D-${csatDiff}`;
+        else csatEl.innerText = `🎯 수능 파이팅!`;
     }
 
     function enterApp() {
         const grade = document.getElementById("gradeSelect").value;
         const classNum = document.getElementById("classSelect").value;
         const key = `${grade}-${classNum}`;
+        
         document.getElementById("userClassInfo").innerText = `${grade}학년 ${classNum}반`;
 
         setLunchMenu();
-        calculateDdays(); // 앱 접속할 때 두 개의 D-Day 함수 동시 실행!
+        calculateDdays(); 
 
         const tbody = document.getElementById("timetableBody");
         tbody.innerHTML = ""; 
-        
         const weekData = timetableDB[key] || defaultWeek;
         const days = ["월", "화", "수", "목", "금"];
 
         weekData.forEach((daySchedule, index) => {
             const tr = document.createElement("tr");
-            
             const th = document.createElement("th");
             th.innerText = days[index];
             tr.appendChild(th);
@@ -439,7 +585,7 @@
             daySchedule.forEach(subject => {
                 const td = document.createElement("td");
                 if (subject.length === 1 && subject.match(/[A-Z]/)) {
-                    td.innerHTML = `<span class="elective-badge">${subject}</span>`;
+                    td.innerHTML = `<span class="elective">${subject}</span>`;
                 } else {
                     td.innerText = subject;
                 }
@@ -462,10 +608,15 @@
     }
 
     function openModal(id) {
-        document.getElementById(id).classList.remove("hidden");
+        const modal = document.getElementById(id);
+        modal.classList.remove("hidden");
+        // 약간의 딜레이를 주어 CSS 트랜지션 애니메이션이 작동하도록 함
+        setTimeout(() => modal.classList.add("active"), 10);
     }
     function closeModal(id) {
-        document.getElementById(id).classList.add("hidden");
+        const modal = document.getElementById(id);
+        modal.classList.remove("active");
+        setTimeout(() => modal.classList.add("hidden"), 300);
     }
 </script>
 
