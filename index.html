@@ -352,7 +352,11 @@
             <p><strong>[4주차 및 시험기간]</strong><br>
             6/22(월): 스팸마요덮밥, 가쓰오장국, 돈육후라이드, 블루베리치즈와플<br>
             6/23(화): 율무밥, 황도그린샐러드, 시금치프리타타, 과일젤리<br>
-            6/24(수) ~ 6/30(화): <span style="color:var(--accent-lunch);">기말고사 기간 급식 정상 운영</span><br>
+            6/24(수): 발아현미밥, 된장찌개, 쭈꾸미볶음, 청경채사과무침, 귤 <span style="color:var(--accent-lunch);">(기말 1일차)</span><br>
+            6/25(목): 미니김치말이국수, 옹심이감자국, 돼지갈비떡찜, 열무김치 <span style="color:var(--accent-lunch);">(기말 2일차)</span><br>
+            6/26(금): 차수수밥, 바베큐닭봉구이, 한우설렁탕, 마늘쫑멸치볶음, 수박 <span style="color:var(--accent-lunch);">(기말 3일차)</span><br>
+            6/29(월): 목살필라프, 미소된장국, 샐러드파스타, 크림치즈타르트, 포도 <span style="color:var(--accent-lunch);">(기말 4일차)</span><br>
+            6/30(화): 찰흑미밥, 부대찌개, 고구마순된장무침, 깐풍기, 사과주스 <span style="color:var(--accent-lunch);">(기말 5일차)</span><br>
             7/1(수): 기말고사 마지막 날 <span style="color:var(--accent-exam);">(급식 없음)</span></p>
         </div>
         <div style="text-align: right; margin-top: 20px;"><button class="btn" onclick="closeModal('lunchModal')">닫기</button></div>
@@ -361,22 +365,43 @@
 
 <!-- 2. 학사일정 모달 -->
 <div id="calendarModal" class="modal-overlay">
-    <div class="modal-content">
-        <h2 class="text-primary" style="border-bottom: 2px solid var(--border); padding-bottom: 15px;">📅 2026학년도 1학기 주요 학사일정</h2>
-        <ul style="line-height: 2.0; font-size: 15px; font-weight: 600; padding-left: 20px;">
-            <li><strong>3월 2일:</strong> 입학식 및 개학식</li>
-            <li><strong>3월 24일:</strong> 1,2,3학년 전국연합학력평가</li>
-            <li><strong>4월 23일 ~ 28일:</strong> 1차 정기시험 (중간고사)</li>
-            <li><strong>5월 4일:</strong> 학교장 재량휴업일</li>
-            <li><strong>5월 14일:</strong> 온빛스포츠데이 (체육대회)</li>
-            <li><strong>5월 15일:</strong> 학교장 재량휴업일</li>
-            <li><strong>6월 3일:</strong> 제8회 지방선거 (휴일)</li>
-            <li><strong>6월 4일:</strong> 전국연합학력평가 및 대수능모의평가</li>
-            <li><strong>6월 5일:</strong> 월요일 수업 진행</li>
-            <li><strong>6월 24일 ~ 7월 1일:</strong> <span style="color:var(--accent-exam);">2차 정기시험 (기말고사)</span></li>
-            <li><strong>7월 7일:</strong> 3학년 전국연합학력평가</li>
-            <li><strong>7월 22일:</strong> <span style="color:var(--accent-lunch);">여름 방학식 🌴</span></li>
-        </ul>
+    <div class="modal-content" style="max-width: 800px;">
+        <h2 class="text-primary" style="border-bottom: 2px solid var(--border); padding-bottom: 15px;">📅 2026학년도 주요 학사일정</h2>
+        
+        <div class="grid-2" style="margin-bottom: 0;">
+            <!-- 1학기 일정 -->
+            <div style="background: var(--bg-color); padding: 20px; border-radius: 12px;">
+                <h3 style="color: var(--primary); margin-top: 0;">🌸 1학기</h3>
+                <ul style="line-height: 1.8; font-size: 14px; font-weight: 600; padding-left: 20px; margin-bottom: 0;">
+                    <li><strong>3월 2일:</strong> 입학식 및 개학식</li>
+                    <li><strong>3월 24일:</strong> 전국연합학력평가</li>
+                    <li><strong>4월 23일~28일:</strong> 1차 정기시험(중간고사)</li>
+                    <li><strong>5월 4일:</strong> 학교장 재량휴업일</li>
+                    <li><strong>5월 14일:</strong> 온빛스포츠데이(체육대회)</li>
+                    <li><strong>5월 15일:</strong> 학교장 재량휴업일</li>
+                    <li><strong>6월 3일:</strong> 제8회 지방선거 (휴일)</li>
+                    <li><strong>6월 4일:</strong> 전국연합 및 대수능모의평가</li>
+                    <li><strong>6월 24일~7월 1일:</strong> 2차 정기시험(기말고사)</li>
+                    <li><strong>7월 7일:</strong> 3학년 전국연합학력평가</li>
+                    <li><strong>7월 22일:</strong> <span style="color:var(--accent-lunch);">여름 방학식 🌴</span></li>
+                </ul>
+            </div>
+
+            <!-- 2학기 일정 -->
+            <div style="background: var(--bg-color); padding: 20px; border-radius: 12px;">
+                <h3 style="color: #F59E0B; margin-top: 0;">🍁 2학기 (예정)</h3>
+                <ul style="line-height: 1.8; font-size: 14px; font-weight: 600; padding-left: 20px; margin-bottom: 0;">
+                    <li><strong>8월 17일:</strong> 2학기 개학식</li>
+                    <li><strong>9월 2일:</strong> 전국연합 및 대수능모의평가</li>
+                    <li><strong>10월 중순:</strong> 1차 정기시험(중간고사)</li>
+                    <li><strong>11월 19일:</strong> <span style="color:var(--accent-exam);">대학수학능력시험 🎯</span></li>
+                    <li><strong>12월 중순:</strong> 2차 정기시험(기말고사)</li>
+                    <li><strong>1월 초:</strong> 겨울 방학식 및 종업식 ⛄</li>
+                </ul>
+                <p style="font-size: 12px; color: var(--secondary); margin-top: 15px;">* 2학기 일정은 추후 학교 일정에 맞춰 업데이트됩니다.</p>
+            </div>
+        </div>
+
         <div style="text-align: right; margin-top: 20px;"><button class="btn" onclick="closeModal('calendarModal')">닫기</button></div>
     </div>
 </div>
@@ -797,7 +822,12 @@
                 // 원본 글자(예: "지구E", "수탐A", "화학2C")를 찾아서, 
                 // 2,3학년 선택과목의 마지막 글자가 A~E로 끝나면 그 알파벳만 예쁘게 뽑아서 뱃지로 출력!
                 if (grade !== "1" && subject.match(/[A-E]$/)) {
-                    td.innerHTML = `<span class="elective">${subject.slice(-1)}</span>`;
+                    // 단, '문학'과 '일반 영어' 관련 과목은 과목명+알파벳 전체 출력! (심화영어는 알파벳만)
+                    if ((subject.includes("문학") || subject.includes("영")) && !subject.includes("심영")) {
+                        td.innerText = subject;
+                    } else {
+                        td.innerHTML = `<span class="elective">${subject.slice(-1)}</span>`;
+                    }
                 } else {
                     td.innerText = subject; // 1학년이거나, 운건, 일본2 등 일반 과목이면 원본 그대로 출력
                 }
