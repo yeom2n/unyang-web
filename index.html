@@ -62,7 +62,7 @@
         }
 
         @media (max-width: 600px) {
-            .view-box { padding: 25px 20px; }
+            .view-box { padding: 25px 15px; }
             body { padding: 10px; }
         }
 
@@ -138,7 +138,7 @@
         }
         .b-vacation { background: linear-gradient(135deg, #F59E0B, #D97706); }
         .b-csat { background: linear-gradient(135deg, #EF4444, #B91C1C); }
-        .b-exam { background: linear-gradient(135deg, #8B5CF6, #6D28D9); } 
+        .b-exam { background: linear-gradient(135deg, #8B5CF6, #6D28D9); }
 
         /* 그리드 카드 레이아웃 */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
@@ -170,16 +170,16 @@
         }
         .btn-icon:hover { background: var(--border); }
 
-        /* 시간표 세로 배치 테이블 (화면 꽉 차게 자동 조절) */
+        /* 시간표 세로 배치 테이블 (화면 너비에 맞춰 자동 축소) */
         .table-container { 
             width: 100%; 
-            overflow-x: auto; /* 극단적으로 작은 화면 대비 */
+            overflow-x: auto; 
         }
         table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            table-layout: fixed; /* 칸 너비를 화면 비율에 맞게 균등 분배 */
+            table-layout: fixed; /* 테이블 너비 균등 분할로 모바일 최적화 */
         }
         th, td {
             padding: 12px 5px;
@@ -187,7 +187,7 @@
             border-bottom: 1px solid var(--border);
             vertical-align: middle;
             height: 30px; 
-            word-break: keep-all; /* 단어가 잘려서 줄바꿈되는 것 방지 */
+            word-break: keep-all; 
             font-size: 15px;
         }
         th { font-weight: 700; color: var(--secondary); padding-bottom: 15px; }
@@ -200,15 +200,15 @@
             display: inline-block; box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
         }
 
-        /* 모바일 최적화 (시간표 크기 자동 조절) */
+        /* 📱 모바일 최적화 (가로 스크롤 없이 크기 자동 조절) */
         @media (max-width: 600px) {
             th, td {
                 padding: 10px 2px;
-                font-size: 13px; /* 모바일에서 텍스트 크기 축소 */
+                font-size: 13px; 
             }
             .elective {
                 padding: 4px 6px;
-                font-size: 12px; /* 모바일에서 뱃지 크기 축소 */
+                font-size: 12px; 
                 border-radius: 6px;
             }
         }
@@ -230,7 +230,7 @@
         }
         .modal-overlay.active .modal-content { transform: translateY(0); }
 
-        /* 기말고사 전용 테이블 (모바일 대응) */
+        /* 기말고사 전용 테이블 */
         .exam-table th { background: var(--bg-color); border: 1px solid var(--border); }
         .exam-table td { border: 1px solid var(--border); font-size: 13px; padding: 10px; }
         @media (max-width: 600px) {
@@ -326,7 +326,7 @@
             <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--secondary);">기간: 2026. 6. 24(수) ~ 7. 1(수)</p>
         </div>
 
-        <!-- 시간표 카드 (세로 배치형) -->
+        <!-- 시간표 카드 -->
         <div class="card">
             <div class="card-header">⏱️ 우리 반 주간 시간표</div>
             <div class="table-container">
@@ -676,4 +676,223 @@
             ["세시", "영독", "화학2C", "확통", "생과E", "생명2B", "화작"], 
             ["화학2C", "영독", "화작", "수탐A", "정법D", "중국2", "운건"], 
             ["화작", "진로", "수탐A", "확통", "정법D", "생명2B", ""], 
-            ["생명2B", "운건", "정법D", "생과E", "창체", "
+            ["생명2B", "운건", "정법D", "생과E", "창체", "창체", ""], 
+            ["영독", "생과E", "확통", "중국2", "수탐A", "화학2C", ""] 
+        ],
+        "3-2": [ 
+            ["영독", "화작", "프로C", "세시", "사문E", "생과B", "운건"], 
+            ["프로C", "화작", "미적", "확통A", "미감D", "인공", "영독"], 
+            ["미적", "운건", "확통A", "진로", "미감D", "생과B", ""], 
+            ["생과B", "화작", "미감D", "사문E", "창체", "창체", ""], 
+            ["영독", "미적", "화작", "인공", "확통A", "프로C", ""] 
+        ],
+        "3-3": [ 
+            ["영독", "확통", "사탐C", "화작", "정법E", "사문B", "세시"], 
+            ["사탐C", "진로", "운건", "여지A", "윤사D", "가정", "확통"], 
+            ["운건", "영독", "여지A", "화작", "윤사D", "사문B", ""], 
+            ["사문B", "영독", "윤사D", "정법E", "창체", "창체", ""], 
+            ["확통", "화작", "영독", "가정", "여지A", "사탐C", ""] 
+        ],
+        "3-4": [ 
+            ["확통", "세시", "윤사C", "진로", "세지E", "여지B", "운건"], 
+            ["윤사C", "확통", "영독", "사문A", "사탐D", "일본2", "화작"], 
+            ["영독", "화작", "사문A", "운건", "사탐D", "여지B", ""], 
+            ["여지B", "확통", "사탐D", "세지E", "창체", "창체", ""], 
+            ["화작", "영독", "진로", "일본2", "사문A", "윤사C", ""] 
+        ],
+        "3-5": [ 
+            ["화작", "가정", "사문C", "영독", "윤사E", "사탐B", "확통"], 
+            ["사문C", "영독", "확통", "세지A", "생과D", "화작", "운건"], 
+            ["확통", "영독", "세지A", "세시", "생과D", "사탐B", ""], 
+            ["사탐B", "가정", "생과D", "윤사E", "창체", "창체", ""], 
+            ["운건", "영독", "화작", "세시", "세지A", "사문C", ""] 
+        ],
+        "3-6": [ 
+            ["세시", "인공", "여지C", "화작", "사탐E", "확통", "영독"], 
+            ["여지C", "운건", "진로", "생과A", "생명2D", "미적", "영독"], 
+            ["화작", "운건", "생과A", "세시", "생명2D", "확통", ""], 
+            ["확통", "인공", "생명2D", "사탐E", "창체", "창체", ""], 
+            ["화작", "영독", "화작", "운건", "생과A", "여지C", ""] 
+        ],
+        "3-7": [ 
+            ["운건", "일본2", "사문C", "영독", "화학2E", "윤사B", "확통"], 
+            ["사문C", "화작", "운건", "사탐A", "여지D", "영독", "확통"], 
+            ["영독", "세시", "사탐A", "화작", "여지D", "윤사B", ""], 
+            ["윤사B", "일본2", "여지D", "화학2E", "창체", "창체", ""], 
+            ["확통", "세시", "진로", "영독", "사탐A", "사문C", ""] 
+        ],
+        "3-8": [ 
+            ["확통", "화작", "생명2C", "운건", "생과E", "음감B", "영독"], 
+            ["생명2C", "확통", "화작", "세계A", "프로D", "진로", "인공"], 
+            ["세시", "확통", "세계A", "영독", "프로D", "음감B", ""], 
+            ["음감B", "화작", "프로D", "생과E", "창체", "창체", ""], 
+            ["인공", "생과E", "영독", "진로", "세계A", "생명2C", ""] 
+        ],
+        "3-9": [ 
+            ["운건", "확통", "지구2C", "세시", "여지E", "물리2B", "화작"], 
+            ["지구2C", "운건", "영독", "심국A", "사문D", "화작", "가정"], 
+            ["확통", "화작", "심국A", "영독", "사문D", "물리2B", ""], 
+            ["물리2B", "확통", "사문D", "여지E", "창체", "창체", ""], 
+            ["가정", "여지E", "진로", "영독", "심국A", "지구2C", ""] 
+        ],
+        "3-10": [ 
+            ["화작", "영독", "생과C", "운건", "미감E", "사문B", "가정"], 
+            ["생과C", "진로", "확통", "음감A", "세계D", "영독", "화작"], 
+            ["세시", "가정", "음감A", "확통", "세계D", "사문B", ""], 
+            ["사문B", "영독", "세계D", "미감E", "창체", "창체", ""], 
+            ["운건", "미감E", "확통", "화작", "음감A", "생과C", ""] 
+        ]
+    };
+
+    // 2. 6월 전체 급식 DB
+    const lunchDB = {
+        "20260601": "차조밥, 얼큰낙지수제비국, 열무나물무침, 과일탕수육, 호상요구르트",
+        "20260602": "곤드레밥, 들깨버섯국, 참외무침, 고등어자반구이, 아이스홍시",
+        "20260603": "지방선거일 (휴일)",
+        "20260604": "사천짜장밥, 김치콩나물국, 양상추샐러드, 새우꼬치, 멜론",
+        "20260605": "찰보리밥, 닭한마리, 양파부추초절임, 고기지질, 겉절이, 레몬에이드",
+        "20260608": "귀리밥, 부추순대국, 청포묵무침, 마파두부, 총각김치, 수박",
+        "20260609": "잡곡밥, 우동국, 치즈불닭, 피자고로케, 배추김치, 샤베트",
+        "20260610": "찰옥수수밥, 근대된장국, 오징어삼겹살볶음, 고구마치즈오믈렛, 골드키위",
+        "20260611": "찰현미밥, 한우샤브샤브국, 코다리조림, 미역오이무침, 청포도",
+        "20260612": "훈제오리볶음밥, 게살달걀국, 시리얼그린샐러드, 핫도그, 자두주스",
+        "20260615": "칼슘기장밥, 육개장, 치즈블럭돈카츠, 알감자버터구이, 사과",
+        "20260616": "들기름막국수, 돼지고기채소오븐구이, 메밀전병, 보쌈김치, 요거톡",
+        "20260617": "잡곡밥, 쇠고기무국, 진미채야채무침, 마라부대볶음, 배추김치, 멜론",
+        "20260618": "차수수밥, 순두부찌개, 메추리알곤약조림, 트러플양송이크림함박, 요구르트",
+        "20260619": "발아흑미밥, 건새우아욱된장국, 닭볶음탕, 콩나물파채무침, 수리취꿀떡",
+        "20260622": "스팸마요덮밥, 가쓰오장국, 돈육후라이드, 블루베리치즈와플",
+        "20260623": "율무밥, 황도그린샐러드, 시금치프리타타, 과일젤리",
+        "20260624": "발아현미밥, 된장찌개, 쭈꾸미볶음, 청경채사과무침, 귤 (기말 1일차)",
+        "20260625": "미니김치말이국수, 옹심이감자국, 돼지갈비떡찜, 열무김치 (기말 2일차)",
+        "20260626": "차수수밥, 바베큐닭봉구이, 한우설렁탕, 마늘쫑멸치볶음, 수박 (기말 3일차)",
+        "20260629": "목살필라프, 미소된장국, 샐러드파스타, 크림치즈타르트, 포도 (기말 4일차)",
+        "20260630": "찰흑미밥, 부대찌개, 고구마순된장무침, 깐풍기, 사과주스 (기말 5일차)",
+        "20260701": "기말고사 마지막 날 (급식 없음)"
+    };
+
+    function setLunchMenu() {
+        let dateObj = new Date();
+        
+        if (dateObj.getDay() === 6) dateObj.setDate(dateObj.getDate() + 2);
+        if (dateObj.getDay() === 0) dateObj.setDate(dateObj.getDate() + 1);
+
+        const year = dateObj.getFullYear();
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        const searchDate = `${year}${month}${day}`;
+
+        document.getElementById("lunchTitle").innerText = `${month}/${day} 급식`;
+        
+        if (lunchDB[searchDate]) {
+            document.getElementById("lunchContent").innerText = lunchDB[searchDate];
+        } else {
+            document.getElementById("lunchContent").innerText = "해당 날짜의 급식 정보가 없습니다.";
+        }
+    }
+
+    function calculateDdays() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); 
+        
+        // 1. 지필고사(기말고사) D-Day (2026년 6월 24일 기준)
+        const examDate = new Date("2026-06-24T00:00:00");
+        const examDiff = Math.ceil((examDate - today) / (1000 * 60 * 60 * 24));
+        const examEl = document.getElementById("examDdayBadge");
+        if (examDiff > 0) examEl.innerText = `📝 지필고사 D-${examDiff}`;
+        else if (examDiff === 0) examEl.innerText = `📝 지필고사 시작!`;
+        else if (examDiff >= -7) examEl.innerText = `📝 지필고사 진행중!`; 
+        else examEl.style.display = 'none'; 
+
+        // 2. 여름방학 D-Day
+        const vacDate = new Date("2026-07-22T00:00:00");
+        const vacDiff = Math.ceil((vacDate - today) / (1000 * 60 * 60 * 24));
+        const vacEl = document.getElementById("vacationBadge");
+        if (vacDiff > 0) vacEl.innerText = `🌴 방학 D-${vacDiff}`;
+        else if (vacDiff === 0) vacEl.innerText = `🌴 여름방학 시작! 🎉`;
+        else vacEl.innerText = `🌴 방학 중!`;
+
+        // 3. 수능 D-Day
+        const csatDate = new Date("2026-11-19T00:00:00");
+        const csatDiff = Math.ceil((csatDate - today) / (1000 * 60 * 60 * 24));
+        const csatEl = document.getElementById("csatBadge");
+        if (csatDiff > 0) csatEl.innerText = `🎯 수능 D-${csatDiff}`;
+        else csatEl.innerText = `🎯 수능 파이팅!`;
+    }
+
+    function enterApp() {
+        const grade = document.getElementById("gradeSelect").value;
+        const classNum = document.getElementById("classSelect").value;
+        const key = `${grade}-${classNum}`;
+        
+        document.getElementById("userClassInfo").innerText = `${grade}학년 ${classNum}반`;
+
+        setLunchMenu();
+        calculateDdays(); 
+
+        const tbody = document.getElementById("timetableBody");
+        tbody.innerHTML = ""; 
+        
+        // 데이터 없으면 에러 안나게 빈칸 배열 생성
+        const emptyDayArr = ["", "", "", "", "", "", ""];
+        const weekData = timetableDB[key] || [emptyDayArr, emptyDayArr, emptyDayArr, emptyDayArr, emptyDayArr];
+
+        // 가독성 100% 확보된 세로형(교시 기준) 렌더링 로직
+        for (let period = 0; period < 7; period++) {
+            const tr = document.createElement("tr");
+            
+            // 1교시, 2교시 타이틀
+            const th = document.createElement("th");
+            th.innerText = `${period + 1}교시`;
+            tr.appendChild(th);
+
+            // 월,화,수,목,금 순서대로 채우기
+            for (let day = 0; day < 5; day++) {
+                const subject = weekData[day][period] || "";
+                const td = document.createElement("td");
+                
+                // ★원하셨던 완벽한 로직!★ 
+                // 원본 글자(예: "지구E", "수탐A", "화학2C")를 찾아서, 
+                // 2,3학년 선택과목의 마지막 글자가 A~E로 끝나면 그 알파벳만 예쁘게 뽑아서 뱃지로 출력!
+                if (grade !== "1" && subject.match(/[A-E]$/)) {
+                    // 단, '문학'과 '일반 영어' 관련 과목은 과목명+알파벳 전체 출력! (심화영어는 알파벳만)
+                    if ((subject.includes("문학") || subject.includes("영")) && !subject.includes("심영")) {
+                        td.innerText = subject;
+                    } else {
+                        td.innerHTML = `<span class="elective">${subject.slice(-1)}</span>`;
+                    }
+                } else {
+                    td.innerText = subject; // 1학년이거나, 운건, 일본2 등 일반 과목이면 원본 그대로 출력
+                }
+                tr.appendChild(td);
+            }
+            tbody.appendChild(tr);
+        }
+
+        document.getElementById("loginView").classList.add("hidden");
+        document.getElementById("dashboardView").classList.remove("hidden");
+    }
+
+    function logout() {
+        document.getElementById("dashboardView").classList.add("hidden");
+        document.getElementById("loginView").classList.remove("hidden");
+    }
+
+    function toggleDarkMode() {
+        document.body.classList.toggle("dark-mode");
+    }
+
+    function openModal(id) {
+        const modal = document.getElementById(id);
+        modal.classList.remove("hidden");
+        setTimeout(() => modal.classList.add("active"), 10);
+    }
+    function closeModal(id) {
+        const modal = document.getElementById(id);
+        modal.classList.remove("active");
+        setTimeout(() => modal.classList.add("hidden"), 300);
+    }
+</script>
+
+</body>
+</html>
