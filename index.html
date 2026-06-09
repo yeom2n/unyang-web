@@ -138,6 +138,7 @@
         }
         .b-vacation { background: linear-gradient(135deg, #F59E0B, #D97706); }
         .b-csat { background: linear-gradient(135deg, #EF4444, #B91C1C); }
+        .b-exam { background: linear-gradient(135deg, #8B5CF6, #6D28D9); } /* 지필고사 전용 보라색 뱃지 추가 */
 
         /* 그리드 카드 레이아웃 */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
@@ -260,6 +261,7 @@
                     운양고 대시보드 <span class="class-tag" id="userClassInfo">2학년 3반</span>
                 </div>
                 <div class="badges" style="margin-top: 10px;">
+                    <span id="examDdayBadge" class="badge b-exam">📝 지필고사 D-Day</span>
                     <span id="vacationBadge" class="badge b-vacation">🌴 방학 D-Day</span>
                     <span id="csatBadge" class="badge b-csat">🎯 수능 D-Day</span>
                 </div>
@@ -772,6 +774,16 @@
         const today = new Date();
         today.setHours(0, 0, 0, 0); 
         
+        // 1. 지필고사(기말고사) D-Day (2026년 6월 24일 기준)
+        const examDate = new Date("2026-06-24T00:00:00");
+        const examDiff = Math.ceil((examDate - today) / (1000 * 60 * 60 * 24));
+        const examEl = document.getElementById("examDdayBadge");
+        if (examDiff > 0) examEl.innerText = `📝 지필고사 D-${examDiff}`;
+        else if (examDiff === 0) examEl.innerText = `📝 지필고사 시작!`;
+        else if (examDiff >= -7) examEl.innerText = `📝 지필고사 진행중!`; // 7월 1일까지 진행
+        else examEl.style.display = 'none'; // 시험기간 끝나면 뱃지 숨김
+
+        // 2. 여름방학 D-Day
         const vacDate = new Date("2026-07-22T00:00:00");
         const vacDiff = Math.ceil((vacDate - today) / (1000 * 60 * 60 * 24));
         const vacEl = document.getElementById("vacationBadge");
@@ -779,6 +791,7 @@
         else if (vacDiff === 0) vacEl.innerText = `🌴 여름방학 시작! 🎉`;
         else vacEl.innerText = `🌴 방학 중!`;
 
+        // 3. 수능 D-Day
         const csatDate = new Date("2026-11-19T00:00:00");
         const csatDiff = Math.ceil((csatDate - today) / (1000 * 60 * 60 * 24));
         const csatEl = document.getElementById("csatBadge");
