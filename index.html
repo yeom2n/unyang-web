@@ -179,7 +179,7 @@
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            table-layout: fixed; /* 테이블 너비 균등 분할로 모바일 최적화 */
+            table-layout: fixed; 
         }
         th, td {
             padding: 12px 5px;
@@ -200,17 +200,10 @@
             display: inline-block; box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
         }
 
-        /* 📱 모바일 최적화 (가로 스크롤 없이 크기 자동 조절) */
+        /* 📱 모바일 최적화 */
         @media (max-width: 600px) {
-            th, td {
-                padding: 10px 2px;
-                font-size: 13px; 
-            }
-            .elective {
-                padding: 4px 6px;
-                font-size: 12px; 
-                border-radius: 6px;
-            }
+            th, td { padding: 10px 2px; font-size: 13px; }
+            .elective { padding: 4px 6px; font-size: 12px; border-radius: 6px; }
         }
 
         /* 모달 팝업 */
@@ -310,20 +303,11 @@
                     <button class="btn-icon" onclick="openModal('calendarModal')">연간 일정 보기</button>
                 </div>
                 <ul style="margin: 0; padding-left: 20px; line-height: 1.8; font-weight: 600; font-size: 15px;">
-                    <li>6/4(목): 전국연합학력평가</li>
-                    <li>6/5(금): 월요일 수업 진행</li>
-                    <li>6/24(수) ~ 7/1(수): 기말고사</li>
+                    <li>7/1(수): 기말고사 마지막 날</li>
+                    <li>7/7(화): 3학년 전국연합학력평가</li>
+                    <li>7/22(수): 여름 방학식</li>
                 </ul>
             </div>
-        </div>
-
-        <!-- 기말고사 특별 카드 -->
-        <div class="card" style="background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(239,68,68,0.02)); border-color: rgba(239,68,68,0.2); margin-bottom: 20px;">
-            <div class="card-header" style="margin-bottom: 5px;">
-                <span style="color: var(--accent-exam);">📝 1학기 2차 정기시험(기말고사)</span>
-                <button class="btn" style="padding: 8px 16px; font-size: 13px; background: var(--accent-exam);" onclick="openModal('examModal')">전학년 시간표 확인</button>
-            </div>
-            <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--secondary);">기간: 2026. 6. 24(수) ~ 7. 1(수)</p>
         </div>
 
         <!-- 시간표 카드 -->
@@ -346,41 +330,34 @@
 
 <!-- ================= 모달 영역 ================= -->
 
-<!-- 1. 급식 모달 -->
+<!-- 1. 급식 모달 (7월 업데이트) -->
 <div id="lunchModal" class="modal-overlay">
     <div class="modal-content">
-        <h2 style="color: var(--accent-lunch); border-bottom: 2px solid var(--border); padding-bottom: 15px;">🍱 6월 전체 급식 식단표</h2>
+        <h2 style="color: var(--accent-lunch); border-bottom: 2px solid var(--border); padding-bottom: 15px;">🍱 7월 전체 급식 식단표</h2>
         <div style="line-height: 1.8; font-size: 15px; font-weight: 600;">
             <p><strong>[1주차]</strong><br>
-            6/1(월): 차조밥, 얼큰낙지수제비국, 열무나물무침, 과일탕수육, 호상요구르트<br>
-            6/2(화): 곤드레밥, 들깨버섯국, 참외무침, 고등어자반구이, 아이스홍시<br>
-            6/3(수): 지방선거일 (휴일)<br>
-            6/4(목): 사천짜장밥, 김치콩나물국, 양상추샐러드, 새우꼬치, 멜론<br>
-            6/5(금): 찰보리밥, 닭한마리, 양파부추초절임, 고기지질, 겉절이, 레몬에이드</p><hr style="border:0; border-top:1px dashed var(--border); margin:15px 0;">
+            7/1(수): 2차 정기시험 (급식 없음)<br>
+            7/2(목): 투움바파스타, 그린샐러드&망고드레싱, 왕돈까스&소스, 배추겉절이, 과일(멜론)<br>
+            7/3(금): 차조밥, 꽃게탕, 순대강정, 채소계란찜, 배추김치, 포도주스</p><hr style="border:0; border-top:1px dashed var(--border); margin:15px 0;">
             
             <p><strong>[2주차]</strong><br>
-            6/8(월): 귀리밥, 부추순대국, 청포묵무침, 마파두부, 총각김치, 수박<br>
-            6/9(화): 잡곡밥, 우동국, 치즈불닭, 피자고로케, 배추김치, 샤베트<br>
-            6/10(수): 찰옥수수밥, 근대된장국, 오징어삼겹살볶음, 고구마치즈오믈렛, 골드키위<br>
-            6/11(목): 찰현미밥, 한우샤브샤브국, 코다리조림, 미역오이무침, 청포도<br>
-            6/12(금): 훈제오리볶음밥, 게살달걀국, 시리얼그린샐러드, 핫도그, 자두주스</p><hr style="border:0; border-top:1px dashed var(--border); margin:15px 0;">
+            7/6(월): 콩나물밥&부추양념장, 두부구이, 실파계란국, 기름떡볶이&김말이, 배추김치, 바나나우유<br>
+            7/7(화): 메밀막국수, 상추쌈&쌀장, 수육, 보쌈김치, 자몽허니블랙티<br>
+            7/8(수): 카레라이스, 어묵국, 열대과일샐러드, 치킨텐더&소스, 배추김치, 요구르트<br>
+            7/9(목): 찰기장밥, 한우사골곰탕, 참나물사과무침, 깐쇼새우, 깍두기, 과일(포도)<br>
+            7/10(금): 귀리밥, 쇠고기미역국, 쥐포채조림, 닭갈비, 열무김치, 과일(귤)</p><hr style="border:0; border-top:1px dashed var(--border); margin:15px 0;">
             
             <p><strong>[3주차]</strong><br>
-            6/15(월): 칼슘기장밥, 육개장, 치즈블럭돈카츠, 알감자버터구이, 사과<br>
-            6/16(화): 들기름막국수, 돼지고기채소오븐구이, 메밀전병, 보쌈김치, 요거톡<br>
-            6/17(수): 잡곡밥, 쇠고기무국, 진미채야채무침, 마라부대볶음, 배추김치, 멜론<br>
-            6/18(목): 차수수밥, 순두부찌개, 메추리알곤약조림, 트러플양송이크림함박, 요구르트<br>
-            6/19(금): 발아흑미밥, 건새우아욱된장국, 닭볶음탕, 콩나물파채무침, 수리취꿀떡</p><hr style="border:0; border-top:1px dashed var(--border); margin:15px 0;">
+            7/13(월): 잡곡밥, 떡만두국, 등갈비바베큐폭립, 무말랭이무침, 배추김치, 과일(골드파인애플)<br>
+            7/14(화): 차수수밥, 호박고추장찌개, 열무나물무침, 콘치즈떡갈비구이, 섞박지, 과일푸딩<br>
+            7/15(수): 찰흑미밥, 닭다리삼계탕, 삼치데리야끼소스구이, 연근다시마부각, 배추겉절이, 과일(수박)<br>
+            7/16(목): 찰옥수수밥, 햄치즈순두부찌개, 도토리묵채소무침, 소고기당면볶음, 열무김치, 아이스망고바<br>
+            7/17(금): 중화제육덮밥, 가쓰오장국, 양상추샐러드&유자드레싱, 모짜렐라치즈볼, 배추김치, 레드자몽에이드</p><hr style="border:0; border-top:1px dashed var(--border); margin:15px 0;">
             
-            <p><strong>[4주차 및 시험기간]</strong><br>
-            6/22(월): 스팸마요덮밥, 가쓰오장국, 돈육후라이드, 블루베리치즈와플<br>
-            6/23(화): 율무밥, 황도그린샐러드, 시금치프리타타, 과일젤리<br>
-            6/24(수): 발아현미밥, 된장찌개, 쭈꾸미볶음, 청경채사과무침, 귤 <span style="color:var(--accent-lunch);">(기말 1일차)</span><br>
-            6/25(목): 미니김치말이국수, 옹심이감자국, 돼지갈비떡찜, 열무김치 <span style="color:var(--accent-lunch);">(기말 2일차)</span><br>
-            6/26(금): 차수수밥, 바베큐닭봉구이, 한우설렁탕, 마늘쫑멸치볶음, 수박 <span style="color:var(--accent-lunch);">(기말 3일차)</span><br>
-            6/29(월): 목살필라프, 미소된장국, 샐러드파스타, 크림치즈타르트, 포도 <span style="color:var(--accent-lunch);">(기말 4일차)</span><br>
-            6/30(화): 찰흑미밥, 부대찌개, 고구마순된장무침, 깐풍기, 사과주스 <span style="color:var(--accent-lunch);">(기말 5일차)</span><br>
-            7/1(수): 기말고사 마지막 날 <span style="color:var(--accent-exam);">(급식 없음)</span></p>
+            <p><strong>[4주차]</strong><br>
+            7/20(월): 햄채소볶음밥, 김치콩나물국, 토마토치즈샐러드, 열무김치, 크림꽈배기, 호상요구르트<br>
+            7/21(화): 오색현미밥, 대파육개장, 계란고기장조림, 감자채전, 깍두기, 과일(멜론)<br>
+            7/22(수): 방학식 🎉 (급식 없음)</p>
         </div>
         <div style="text-align: right; margin-top: 20px;"><button class="btn" onclick="closeModal('lunchModal')">닫기</button></div>
     </div>
@@ -402,7 +379,6 @@
                     <li><strong>5월 4일:</strong> 학교장 재량휴업일</li>
                     <li><strong>5월 14일:</strong> 온빛스포츠데이(체육대회)</li>
                     <li><strong>5월 15일:</strong> 학교장 재량휴업일</li>
-                    <li><strong>6월 3일:</strong> 제8회 지방선거 (휴일)</li>
                     <li><strong>6월 4일:</strong> 전국연합 및 대수능모의평가</li>
                     <li><strong>6월 24일~7월 1일:</strong> 2차 정기시험(기말고사)</li>
                     <li><strong>7월 7일:</strong> 3학년 전국연합학력평가</li>
@@ -429,103 +405,8 @@
     </div>
 </div>
 
-<!-- 3. 기말고사 시간표 모달 -->
-<div id="examModal" class="modal-overlay">
-    <div class="modal-content" style="max-width: 900px;">
-        <h2 style="color: var(--accent-exam); border-bottom: 2px solid var(--border); padding-bottom: 15px;">📝 1학기 2차 정기시험 시간표 (전학년)</h2>
-        <div class="table-container">
-            <table class="exam-table" style="width: 100%; text-align: center; border-collapse: collapse; min-width: 100%;">
-                <thead style="background: var(--bg-color); font-weight: bold;">
-                    <tr>
-                        <th rowspan="2">날짜</th>
-                        <th colspan="3">6/24(수)</th>
-                        <th colspan="3">6/25(목)</th>
-                        <th colspan="3">6/26(금)</th>
-                    </tr>
-                    <tr>
-                        <th>1학년</th><th>2학년</th><th>3학년</th>
-                        <th>1학년</th><th>2학년</th><th>3학년</th>
-                        <th>1학년</th><th>2학년</th><th>3학년</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>1교시</strong><br>(09:20)</td>
-                        <td>자습</td><td>심화영어</td><td>미적분</td>
-                        <td>자습</td><td>일본어I</td><td>세계지리</td>
-                        <td>자습</td><td>세계시민<br>과지리</td><td>자습</td>
-                    </tr>
-                    <tr>
-                        <td><strong>2교시</strong><br>(10:30)</td>
-                        <td>자습</td><td>기하</td><td>심화국어</td>
-                        <td>정보/<br>한문</td><td>생명과학I</td><td>자습</td>
-                        <td>자습</td><td>물리학I</td><td>가정/인공/<br>일본2/중국2</td>
-                    </tr>
-                    <tr>
-                        <td><strong>3교시</strong><br>(11:40)</td>
-                        <td>공통수학1</td>
-                        <td>영어I</td>
-                        <td>화법과작문</td>
-                        <td>공통영어1</td>
-                        <td>대수</td>
-                        <td>확률과통계</td>
-                        <td>통합과학1</td>
-                        <td>현대사회<br>와윤리</td>
-                        <td>지구과학II</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <table class="exam-table" style="width: 100%; text-align: center; border-collapse: collapse; min-width: 100%; margin-top: 20px;">
-                <thead style="background: var(--bg-color); font-weight: bold;">
-                    <tr>
-                        <th rowspan="2">날짜</th>
-                        <th colspan="3">6/29(월)</th>
-                        <th colspan="3">6/30(화)</th>
-                        <th colspan="3">7/1(수)</th>
-                    </tr>
-                    <tr>
-                        <th>1학년</th><th>2학년</th><th>3학년</th>
-                        <th>1학년</th><th>2학년</th><th>3학년</th>
-                        <th>1학년</th><th>2학년</th><th>3학년</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>1교시</strong><br>(09:20)</td>
-                        <td>자습</td><td>화학I</td><td>정치와법</td>
-                        <td>자습</td><td>지구과학I</td><td>윤리와사상</td>
-                        <td>자습</td><td>프로그래밍</td><td>화학II</td>
-                    </tr>
-                    <tr>
-                        <td><strong>2교시</strong><br>(10:30)</td>
-                        <td>자습</td><td>사회문화</td><td>사회문화</td>
-                        <td>자습</td><td>기술가정</td><td>자습</td>
-                        <td>자습</td><td>세계사</td><td>세계사</td>
-                    </tr>
-                    <tr>
-                        <td><strong>3교시</strong><br>(11:40)</td>
-                        <td>통합사회1</td>
-                        <td>중국어I</td>
-                        <td>물리학II</td>
-                        <td>공통국어1</td>
-                        <td>주제탐구/<br>독서</td>
-                        <td>생명과학II</td>
-                        <td>한국사1</td>
-                        <td>문학</td>
-                        <td>영독작</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div style="text-align: right; margin-top: 20px;"><button class="btn" onclick="closeModal('examModal')">닫기</button></div>
-    </div>
-</div>
-
 <script>
-    // 1. 시간표 DB (월, 화, 수, 목, 금 150일치 완벽 복구본!)
-    // 1학년은 목, 금 6교시 / 2, 3학년은 수, 목, 금 6교시 (7교시 빈칸) 완벽 반영!
-    
+    // 1. 시간표 DB (월, 화, 수, 목, 금)
     const timetableDB = {
         // =============== 1학년 시간표 ===============
         "1-1": [ 
@@ -744,31 +625,24 @@
         ]
     };
 
-    // 2. 6월 전체 급식 DB
+    // 2. 7월 전체 급식 DB (최신 업데이트됨!)
     const lunchDB = {
-        "20260601": "차조밥, 얼큰낙지수제비국, 열무나물무침, 과일탕수육, 호상요구르트",
-        "20260602": "곤드레밥, 들깨버섯국, 참외무침, 고등어자반구이, 아이스홍시",
-        "20260603": "지방선거일 (휴일)",
-        "20260604": "사천짜장밥, 김치콩나물국, 양상추샐러드, 새우꼬치, 멜론",
-        "20260605": "찰보리밥, 닭한마리, 양파부추초절임, 고기지질, 겉절이, 레몬에이드",
-        "20260608": "귀리밥, 부추순대국, 청포묵무침, 마파두부, 총각김치, 수박",
-        "20260609": "잡곡밥, 우동국, 치즈불닭, 피자고로케, 배추김치, 샤베트",
-        "20260610": "찰옥수수밥, 근대된장국, 오징어삼겹살볶음, 고구마치즈오믈렛, 골드키위",
-        "20260611": "찰현미밥, 한우샤브샤브국, 코다리조림, 미역오이무침, 청포도",
-        "20260612": "훈제오리볶음밥, 게살달걀국, 시리얼그린샐러드, 핫도그, 자두주스",
-        "20260615": "칼슘기장밥, 육개장, 치즈블럭돈카츠, 알감자버터구이, 사과",
-        "20260616": "들기름막국수, 돼지고기채소오븐구이, 메밀전병, 보쌈김치, 요거톡",
-        "20260617": "잡곡밥, 쇠고기무국, 진미채야채무침, 마라부대볶음, 배추김치, 멜론",
-        "20260618": "차수수밥, 순두부찌개, 메추리알곤약조림, 트러플양송이크림함박, 요구르트",
-        "20260619": "발아흑미밥, 건새우아욱된장국, 닭볶음탕, 콩나물파채무침, 수리취꿀떡",
-        "20260622": "스팸마요덮밥, 가쓰오장국, 돈육후라이드, 블루베리치즈와플",
-        "20260623": "율무밥, 황도그린샐러드, 시금치프리타타, 과일젤리",
-        "20260624": "발아현미밥, 된장찌개, 쭈꾸미볶음, 청경채사과무침, 귤 (기말 1일차)",
-        "20260625": "미니김치말이국수, 옹심이감자국, 돼지갈비떡찜, 열무김치 (기말 2일차)",
-        "20260626": "차수수밥, 바베큐닭봉구이, 한우설렁탕, 마늘쫑멸치볶음, 수박 (기말 3일차)",
-        "20260629": "목살필라프, 미소된장국, 샐러드파스타, 크림치즈타르트, 포도 (기말 4일차)",
-        "20260630": "찰흑미밥, 부대찌개, 고구마순된장무침, 깐풍기, 사과주스 (기말 5일차)",
-        "20260701": "기말고사 마지막 날 (급식 없음)"
+        "20260701": "2차 정기시험 (급식 없음)",
+        "20260702": "투움바파스타, 그린샐러드&망고드레싱, 왕돈까스&소스, 배추겉절이, 과일(멜론)",
+        "20260703": "차조밥, 꽃게탕, 순대강정, 채소계란찜, 배추김치, 포도주스",
+        "20260706": "콩나물밥&부추양념장, 두부구이, 실파계란국, 기름떡볶이&김말이, 배추김치, 바나나우유",
+        "20260707": "메밀막국수, 상추쌈&쌀장, 수육, 보쌈김치, 자몽허니블랙티",
+        "20260708": "카레라이스, 어묵국, 열대과일샐러드, 치킨텐더&소스, 배추김치, 요구르트",
+        "20260709": "찰기장밥, 한우사골곰탕, 참나물사과무침, 깐쇼새우, 깍두기, 과일(포도)",
+        "20260710": "귀리밥, 쇠고기미역국, 쥐포채조림, 닭갈비, 열무김치, 과일(귤)",
+        "20260713": "잡곡밥, 떡만두국, 등갈비바베큐폭립, 무말랭이무침, 배추김치, 과일(골드파인애플)",
+        "20260714": "차수수밥, 호박고추장찌개, 열무나물무침, 콘치즈떡갈비구이, 섞박지, 과일푸딩",
+        "20260715": "찰흑미밥, 닭다리삼계탕, 삼치데리야끼소스구이, 연근다시마부각, 배추겉절이, 과일(수박)",
+        "20260716": "찰옥수수밥, 햄치즈순두부찌개, 도토리묵채소무침, 소고기당면볶음, 열무김치, 아이스망고바",
+        "20260717": "중화제육덮밥, 가쓰오장국, 양상추샐러드&유자드레싱, 모짜렐라치즈볼, 배추김치, 레드자몽에이드",
+        "20260720": "햄채소볶음밥, 김치콩나물국, 토마토치즈샐러드, 열무김치, 크림꽈배기, 호상요구르트",
+        "20260721": "오색현미밥, 대파육개장, 계란고기장조림, 감자채전, 깍두기, 과일(멜론)",
+        "20260722": "방학식 (급식 없음)"
     };
 
     function setLunchMenu() {
@@ -851,18 +725,14 @@
                 const subject = weekData[day][period] || "";
                 const td = document.createElement("td");
                 
-                // ★원하셨던 완벽한 로직!★ 
-                // 원본 글자(예: "지구E", "수탐A", "화학2C")를 찾아서, 
-                // 2,3학년 선택과목의 마지막 글자가 A~E로 끝나면 그 알파벳만 예쁘게 뽑아서 뱃지로 출력!
                 if (grade !== "1" && subject.match(/[A-E]$/)) {
-                    // 단, '문학'과 '일반 영어' 관련 과목은 과목명+알파벳 전체 출력! (심화영어는 알파벳만)
                     if ((subject.includes("문학") || subject.includes("영")) && !subject.includes("심영")) {
                         td.innerText = subject;
                     } else {
                         td.innerHTML = `<span class="elective">${subject.slice(-1)}</span>`;
                     }
                 } else {
-                    td.innerText = subject; // 1학년이거나, 운건, 일본2 등 일반 과목이면 원본 그대로 출력
+                    td.innerText = subject; 
                 }
                 tr.appendChild(td);
             }
