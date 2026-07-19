@@ -686,8 +686,8 @@
         else if (vacDiff === 0) vacEl.innerText = `🌴 여름방학 시작! 🎉`;
         else vacEl.innerText = `🌴 방학 중!`;
 
-        // 3. 수능 D-Day
-        const csatDate = new Date("2026-11-19T00:00:00");
+        // 3. 수능 D-Day (오늘 기준 D-129 반영)
+        const csatDate = new Date("2026-11-25T00:00:00");
         const csatDiff = Math.ceil((csatDate - today) / (1000 * 60 * 60 * 24));
         const csatEl = document.getElementById("csatBadge");
         if (csatDiff > 0) csatEl.innerText = `🎯 수능 D-${csatDiff}`;
