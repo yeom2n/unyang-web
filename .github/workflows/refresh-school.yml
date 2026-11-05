@@ -1,0 +1,57 @@
+name: Update school data and deploy
+on:
+  schedule:
+    - cron: '17 21 * * *' # 매일 한국시간 06:17 (GitHub 실행 지연 가능)
+  workflow_dispatch:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: school-pages
+  cancel-in-progress: false
+jobs:
+  update:
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test collector
+        run: python -m unittest discover -s tests
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test display logic
+        run: node tests/test_ui.cjs
+      - name: Fetch NEIS data
+        env:
+          NEIS_API_KEY: ${{ secrets.NEIS_API_KEY }}
+        run: python scripts/update_neis.py
+      - name: Save successful snapshot
+        run: |
+          git add data/school.json
+          if ! git diff --cached --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'Update NEIS school data'
+            git push
+          fi
+      - name: Prepare public files
+        run: |
+          mkdir -p _site/data
+          cp index.html school-data.js _site/
+          cp data/school.json _site/data/
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - uses: actions/deploy-pages@v4
+        id: deployment
