@@ -275,9 +275,9 @@
                     운양고 대시보드 <span class="class-tag" id="userClassInfo">2학년 3반</span>
                 </div>
                 <div class="badges" style="margin-top: 10px;">
-                    <span id="examDdayBadge" class="badge b-exam">📝 지필고사 D-Day</span>
-                    <span id="vacationBadge" class="badge b-vacation">🌴 방학 D-Day</span>
-                    <span id="csatBadge" class="badge b-csat">🎯 수능 D-Day</span>
+                    <span id="examDdayBadge" class="badge b-exam">📝 시험 일정 확인 중</span>
+                    <span id="vacationBadge" class="badge b-vacation">🌴 방학 일정 확인 중</span>
+                    <span id="csatBadge" class="badge b-csat">🎯 수능 일정 확인 중</span>
                 </div>
             </div>
             <div style="display: flex; gap: 10px;">
@@ -286,27 +286,25 @@
             </div>
         </div>
 
-        <div class="grid-2">
+        <p id="dataStatus" role="status" style="color:var(--secondary);font-size:13px"></p>
+        <button class="btn-icon" onclick="SchoolData.load()">정보 새로고침</button>
+        <div class="grid-2" style="margin-top:15px">
             <!-- 급식 카드 -->
             <div class="card" style="border-left: 5px solid var(--accent-lunch);">
                 <div class="card-header">
                     <span style="color: var(--accent-lunch);">🍱 <span id="lunchTitle">오늘의 급식</span></span>
                     <button class="btn-icon" onclick="openModal('lunchModal')">식단표 보기</button>
                 </div>
-                <p id="lunchContent" style="font-size: 16px; line-height: 1.6; font-weight: 700; margin:0;">데이터 로딩중...</p>
+                <p id="lunchContent" style="white-space:pre-line;font-size: 16px; line-height: 1.6; font-weight: 700; margin:0;">데이터 로딩중...</p>
             </div>
 
             <!-- 학사일정 카드 -->
             <div class="card" style="border-left: 5px solid var(--primary);">
                 <div class="card-header">
                     <span class="text-primary">📅 최근 학사 일정</span>
-                    <button class="btn-icon" onclick="openModal('calendarModal')">연간 일정 보기</button>
+                    <button class="btn-icon" onclick="openModal('calendarModal')">월별 일정 보기</button>
                 </div>
-                <ul style="margin: 0; padding-left: 20px; line-height: 1.8; font-weight: 600; font-size: 15px;">
-                    <li>7/1(수): 기말고사 마지막 날</li>
-                    <li>7/7(화): 3학년 전국연합학력평가</li>
-                    <li>7/22(수): 여름 방학식</li>
-                </ul>
+                <ul id="recentEvents" style="padding-left:20px;line-height:1.8" aria-live="polite"><li>데이터를 불러오는 중입니다.</li></ul>
             </div>
         </div>
 
@@ -330,80 +328,26 @@
 
 <!-- ================= 모달 영역 ================= -->
 
-<!-- 1. 급식 모달 (7월 업데이트) -->
+<!-- 나이스 데이터로 생성되는 월별 목록 -->
 <div id="lunchModal" class="modal-overlay">
     <div class="modal-content">
-        <h2 style="color: var(--accent-lunch); border-bottom: 2px solid var(--border); padding-bottom: 15px;">🍱 7월 전체 급식 식단표</h2>
-        <div style="line-height: 1.8; font-size: 15px; font-weight: 600;">
-            <p><strong>[1주차]</strong><br>
-            7/1(수): 2차 정기시험 (급식 없음)<br>
-            7/2(목): 투움바파스타, 그린샐러드&망고드레싱, 왕돈까스&소스, 배추겉절이, 과일(멜론)<br>
-            7/3(금): 차조밥, 꽃게탕, 순대강정, 채소계란찜, 배추김치, 포도주스</p><hr style="border:0; border-top:1px dashed var(--border); margin:15px 0;">
-            
-            <p><strong>[2주차]</strong><br>
-            7/6(월): 콩나물밥&부추양념장, 두부구이, 실파계란국, 기름떡볶이&김말이, 배추김치, 바나나우유<br>
-            7/7(화): 메밀막국수, 상추쌈&쌀장, 수육, 보쌈김치, 자몽허니블랙티<br>
-            7/8(수): 카레라이스, 어묵국, 열대과일샐러드, 치킨텐더&소스, 배추김치, 요구르트<br>
-            7/9(목): 찰기장밥, 한우사골곰탕, 참나물사과무침, 깐쇼새우, 깍두기, 과일(포도)<br>
-            7/10(금): 귀리밥, 쇠고기미역국, 쥐포채조림, 닭갈비, 열무김치, 과일(귤)</p><hr style="border:0; border-top:1px dashed var(--border); margin:15px 0;">
-            
-            <p><strong>[3주차]</strong><br>
-            7/13(월): 잡곡밥, 떡만두국, 등갈비바베큐폭립, 무말랭이무침, 배추김치, 과일(골드파인애플)<br>
-            7/14(화): 차수수밥, 호박고추장찌개, 열무나물무침, 콘치즈떡갈비구이, 섞박지, 과일푸딩<br>
-            7/15(수): 찰흑미밥, 닭다리삼계탕, 삼치데리야끼소스구이, 연근다시마부각, 배추겉절이, 과일(수박)<br>
-            7/16(목): 찰옥수수밥, 햄치즈순두부찌개, 도토리묵채소무침, 소고기당면볶음, 열무김치, 아이스망고바<br>
-            7/17(금): 중화제육덮밥, 가쓰오장국, 양상추샐러드&유자드레싱, 모짜렐라치즈볼, 배추김치, 레드자몽에이드</p><hr style="border:0; border-top:1px dashed var(--border); margin:15px 0;">
-            
-            <p><strong>[4주차]</strong><br>
-            7/20(월): 햄채소볶음밥, 김치콩나물국, 토마토치즈샐러드, 열무김치, 크림꽈배기, 호상요구르트<br>
-            7/21(화): 오색현미밥, 대파육개장, 계란고기장조림, 감자채전, 깍두기, 과일(멜론)<br>
-            7/22(수): 방학식 🎉 (급식 없음)</p>
-        </div>
-        <div style="text-align: right; margin-top: 20px;"><button class="btn" onclick="closeModal('lunchModal')">닫기</button></div>
+        <h2>🍱 월별 급식 식단표</h2>
+        <label for="mealMonth">조회 월 </label><input id="mealMonth" type="month">
+        <p style="font-size:13px;color:var(--secondary)">메뉴의 숫자는 나이스 원문의 알레르기 표시입니다.</p>
+        <div id="monthlyMeals" aria-live="polite"></div>
+        <button class="btn" onclick="closeModal('lunchModal')">닫기</button>
     </div>
 </div>
-
-<!-- 2. 학사일정 모달 -->
 <div id="calendarModal" class="modal-overlay">
-    <div class="modal-content" style="max-width: 800px;">
-        <h2 class="text-primary" style="border-bottom: 2px solid var(--border); padding-bottom: 15px;">📅 2026학년도 주요 학사일정</h2>
-        
-        <div class="grid-2" style="margin-bottom: 0;">
-            <!-- 1학기 일정 -->
-            <div style="background: var(--bg-color); padding: 20px; border-radius: 12px;">
-                <h3 style="color: var(--primary); margin-top: 0;">🌸 1학기</h3>
-                <ul style="line-height: 1.8; font-size: 14px; font-weight: 600; padding-left: 20px; margin-bottom: 0;">
-                    <li><strong>3월 2일:</strong> 입학식 및 개학식</li>
-                    <li><strong>3월 24일:</strong> 전국연합학력평가</li>
-                    <li><strong>4월 23일~28일:</strong> 1차 정기시험(중간고사)</li>
-                    <li><strong>5월 4일:</strong> 학교장 재량휴업일</li>
-                    <li><strong>5월 14일:</strong> 온빛스포츠데이(체육대회)</li>
-                    <li><strong>5월 15일:</strong> 학교장 재량휴업일</li>
-                    <li><strong>6월 4일:</strong> 전국연합 및 대수능모의평가</li>
-                    <li><strong>6월 24일~7월 1일:</strong> 2차 정기시험(기말고사)</li>
-                    <li><strong>7월 7일:</strong> 3학년 전국연합학력평가</li>
-                    <li><strong>7월 22일:</strong> <span style="color:var(--accent-lunch);">여름 방학식 🌴</span></li>
-                </ul>
-            </div>
-
-            <!-- 2학기 일정 -->
-            <div style="background: var(--bg-color); padding: 20px; border-radius: 12px;">
-                <h3 style="color: #F59E0B; margin-top: 0;">🍁 2학기 (예정)</h3>
-                <ul style="line-height: 1.8; font-size: 14px; font-weight: 600; padding-left: 20px; margin-bottom: 0;">
-                    <li><strong>8월 17일:</strong> 2학기 개학식</li>
-                    <li><strong>9월 2일:</strong> 전국연합 및 대수능모의평가</li>
-                    <li><strong>10월 중순:</strong> 1차 정기시험(중간고사)</li>
-                    <li><strong>11월 19일:</strong> <span style="color:var(--accent-exam);">대학수학능력시험 🎯</span></li>
-                    <li><strong>12월 중순:</strong> 2차 정기시험(기말고사)</li>
-                    <li><strong>1월 초:</strong> 겨울 방학식 및 종업식 ⛄</li>
-                </ul>
-                <p style="font-size: 12px; color: var(--secondary); margin-top: 15px;">* 2학기 일정은 추후 학교 일정에 맞춰 업데이트됩니다.</p>
-            </div>
-        </div>
-
-        <div style="text-align: right; margin-top: 20px;"><button class="btn" onclick="closeModal('calendarModal')">닫기</button></div>
+    <div class="modal-content">
+        <h2>📅 월별 학사 일정</h2>
+        <label for="eventMonth">조회 월 </label><input id="eventMonth" type="month">
+        <p>선택한 학년에 해당하는 일정과 대상 학년이 명시되지 않은 일정을 표시합니다.</p>
+        <div id="monthlyEvents" aria-live="polite"></div>
+        <button class="btn" onclick="closeModal('calendarModal')">닫기</button>
     </div>
 </div>
+<script src="school-data.js"></script>
 
 <script>
     // 1. 시간표 DB (월, 화, 수, 목, 금)
@@ -625,75 +569,6 @@
         ]
     };
 
-    // 2. 7월 전체 급식 DB (최신 업데이트됨!)
-    const lunchDB = {
-        "20260701": "2차 정기시험 (급식 없음)",
-        "20260702": "투움바파스타, 그린샐러드&망고드레싱, 왕돈까스&소스, 배추겉절이, 과일(멜론)",
-        "20260703": "차조밥, 꽃게탕, 순대강정, 채소계란찜, 배추김치, 포도주스",
-        "20260706": "콩나물밥&부추양념장, 두부구이, 실파계란국, 기름떡볶이&김말이, 배추김치, 바나나우유",
-        "20260707": "메밀막국수, 상추쌈&쌀장, 수육, 보쌈김치, 자몽허니블랙티",
-        "20260708": "카레라이스, 어묵국, 열대과일샐러드, 치킨텐더&소스, 배추김치, 요구르트",
-        "20260709": "찰기장밥, 한우사골곰탕, 참나물사과무침, 깐쇼새우, 깍두기, 과일(포도)",
-        "20260710": "귀리밥, 쇠고기미역국, 쥐포채조림, 닭갈비, 열무김치, 과일(귤)",
-        "20260713": "잡곡밥, 떡만두국, 등갈비바베큐폭립, 무말랭이무침, 배추김치, 과일(골드파인애플)",
-        "20260714": "차수수밥, 호박고추장찌개, 열무나물무침, 콘치즈떡갈비구이, 섞박지, 과일푸딩",
-        "20260715": "찰흑미밥, 닭다리삼계탕, 삼치데리야끼소스구이, 연근다시마부각, 배추겉절이, 과일(수박)",
-        "20260716": "찰옥수수밥, 햄치즈순두부찌개, 도토리묵채소무침, 소고기당면볶음, 열무김치, 아이스망고바",
-        "20260717": "중화제육덮밥, 가쓰오장국, 양상추샐러드&유자드레싱, 모짜렐라치즈볼, 배추김치, 레드자몽에이드",
-        "20260720": "햄채소볶음밥, 김치콩나물국, 토마토치즈샐러드, 열무김치, 크림꽈배기, 호상요구르트",
-        "20260721": "오색현미밥, 대파육개장, 계란고기장조림, 감자채전, 깍두기, 과일(멜론)",
-        "20260722": "방학식 (급식 없음)"
-    };
-
-    function setLunchMenu() {
-        let dateObj = new Date();
-        
-        if (dateObj.getDay() === 6) dateObj.setDate(dateObj.getDate() + 2);
-        if (dateObj.getDay() === 0) dateObj.setDate(dateObj.getDate() + 1);
-
-        const year = dateObj.getFullYear();
-        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-        const day = String(dateObj.getDate()).padStart(2, '0');
-        const searchDate = `${year}${month}${day}`;
-
-        document.getElementById("lunchTitle").innerText = `${month}/${day} 급식`;
-        
-        if (lunchDB[searchDate]) {
-            document.getElementById("lunchContent").innerText = lunchDB[searchDate];
-        } else {
-            document.getElementById("lunchContent").innerText = "해당 날짜의 급식 정보가 없습니다.";
-        }
-    }
-
-    function calculateDdays() {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0); 
-        
-        // 1. 지필고사(기말고사) D-Day (2026년 6월 24일 기준)
-        const examDate = new Date("2026-06-24T00:00:00");
-        const examDiff = Math.ceil((examDate - today) / (1000 * 60 * 60 * 24));
-        const examEl = document.getElementById("examDdayBadge");
-        if (examDiff > 0) examEl.innerText = `📝 지필고사 D-${examDiff}`;
-        else if (examDiff === 0) examEl.innerText = `📝 지필고사 시작!`;
-        else if (examDiff >= -7) examEl.innerText = `📝 지필고사 진행중!`; 
-        else examEl.style.display = 'none'; 
-
-        // 2. 여름방학 D-Day
-        const vacDate = new Date("2026-07-22T00:00:00");
-        const vacDiff = Math.ceil((vacDate - today) / (1000 * 60 * 60 * 24));
-        const vacEl = document.getElementById("vacationBadge");
-        if (vacDiff > 0) vacEl.innerText = `🌴 방학 D-${vacDiff}`;
-        else if (vacDiff === 0) vacEl.innerText = `🌴 여름방학 시작! 🎉`;
-        else vacEl.innerText = `🌴 방학 중!`;
-
-        // 3. 수능 D-Day (오늘 기준 D-129 반영)
-        const csatDate = new Date("2026-11-25T00:00:00");
-        const csatDiff = Math.ceil((csatDate - today) / (1000 * 60 * 60 * 24));
-        const csatEl = document.getElementById("csatBadge");
-        if (csatDiff > 0) csatEl.innerText = `🎯 수능 D-${csatDiff}`;
-        else csatEl.innerText = `🎯 수능 파이팅!`;
-    }
-
     function enterApp() {
         const grade = document.getElementById("gradeSelect").value;
         const classNum = document.getElementById("classSelect").value;
@@ -701,8 +576,7 @@
         
         document.getElementById("userClassInfo").innerText = `${grade}학년 ${classNum}반`;
 
-        setLunchMenu();
-        calculateDdays(); 
+        SchoolData.load();
 
         const tbody = document.getElementById("timetableBody");
         tbody.innerHTML = ""; 
