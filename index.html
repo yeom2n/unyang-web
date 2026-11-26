@@ -235,6 +235,13 @@
         /* 스크롤바 커스텀 */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        .today-cell { background: color-mix(in srgb, var(--primary) 12%, transparent); }
+        .current-cell { outline: 2px solid var(--primary); outline-offset: -2px; }
+        .elective { max-width: 100%; box-sizing: border-box; overflow-wrap: anywhere; }
+        #subjectSettings { margin: 12px 0; }
+        #subjectSettings summary { cursor: pointer; }
+        #subjectInputs { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+        #subjectInputs input { width: 8em; margin-left: 4px; }
     </style>
 </head>
 <body>
@@ -282,7 +289,7 @@
             </div>
             <div style="display: flex; gap: 10px;">
                 <button class="btn-icon" onclick="toggleDarkMode()">🌓 테마변경</button>
-                <button class="btn-icon" onclick="logout()">🚪 로그아웃</button>
+                <button class="btn-icon" onclick="logout()">학년·반 변경</button>
             </div>
         </div>
 
@@ -294,6 +301,11 @@
                 <div class="card-header">
                     <span style="color: var(--accent-lunch);">🍱 <span id="lunchTitle">오늘의 급식</span></span>
                     <button class="btn-icon" onclick="openModal('lunchModal')">식단표 보기</button>
+                </div>
+                <div aria-label="급식 날짜 선택">
+                    <button class="btn-icon" id="prevMeal">이전 날</button>
+                    <button class="btn-icon" id="todayMeal">오늘</button>
+                    <button class="btn-icon" id="nextMeal">다음 날</button>
                 </div>
                 <p id="lunchContent" style="white-space:pre-line;font-size: 16px; line-height: 1.6; font-weight: 700; margin:0;">데이터 로딩중...</p>
             </div>
@@ -311,6 +323,15 @@
         <!-- 시간표 카드 -->
         <div class="card">
             <div class="card-header">⏱️ 우리 반 2학기 기본 시간표</div>
+            <p>2026학년도 2학기 기준 · 당일 수업 변경은 컴시간에서 확인하세요.</p>
+            <details id="subjectSettings">
+                <summary>내 선택과목 설정</summary>
+                <p>과목명을 입력하면 A~E 옆에 표시됩니다. 비워 두면 글자만 표시됩니다.</p>
+                <form id="subjectForm"><div id="subjectInputs"></div>
+                    <button class="btn-icon">이 브라우저에 저장</button>
+                </form>
+                <span id="saveStatus" role="status"></span>
+            </details>
             <div class="table-container">
                 <table>
                     <thead>
@@ -1765,6 +1786,39 @@
     ]
 };
 
+    const byId = id => document.getElementById(id);
+    const prefix = "unyang.2026-2.";
+    const temporary = new Map();
+    function readSetting(key) {
+        if (temporary.has(key)) return temporary.get(key);
+        try { return localStorage.getItem(prefix + key); } catch { return null; }
+    }
+    function writeSetting(key, value) {
+        temporary.set(key, value);
+        try { localStorage.setItem(prefix + key, value); return true; } catch { return false; }
+    }
+    function classKey() { return byId("gradeSelect").value + "-" + byId("classSelect").value; }
+    const groups = Array.from("ABCDE");
+    for (const group of groups) {
+        const label = document.createElement("label");
+        label.textContent = group;
+        const input = document.createElement("input");
+        input.id = "group" + group;
+        input.maxLength = 24;
+        label.append(input);
+        byId("subjectInputs").append(label);
+    }
+    function subjectNames() {
+        try { return JSON.parse(readSetting("subjects." + classKey())) || {}; } catch { return {}; }
+    }
+    byId("subjectForm").onsubmit = event => {
+        event.preventDefault();
+        const names = {};
+        for (const group of groups) names[group] = byId("group" + group).value.trim();
+        const saved = writeSetting("subjects." + classKey(), JSON.stringify(names));
+        byId("saveStatus").textContent = saved ? "저장했어요." : "브라우저 저장이 제한되어 이번 방문에만 적용됩니다.";
+        renderTimetable();
+    };
     function enterApp() {
         const grade = document.getElementById("gradeSelect").value;
         const classNum = document.getElementById("classSelect").value;
@@ -1772,7 +1826,20 @@
         
         document.getElementById("userClassInfo").innerText = `${grade}학년 ${classNum}반`;
 
+        writeSetting("class", key);
+        byId("subjectSettings").open = false;
+        byId("subjectSettings").hidden = !timetableDB[key].flat().some(s => /^[A-E]$/.test(s));
+        byId("saveStatus").textContent = "";
+        const names = subjectNames();
+        for (const group of groups) byId("group" + group).value = names[group] || "";
         SchoolData.load();
+        renderTimetable();
+        document.getElementById("loginView").classList.add("hidden");
+        document.getElementById("dashboardView").classList.remove("hidden");
+    }
+    function renderTimetable() {
+        const key = classKey();
+        const names = subjectNames();
 
         const tbody = document.getElementById("timetableBody");
         tbody.innerHTML = ""; 
@@ -1799,7 +1866,7 @@
                 if (/^[A-E]$/.test(subject)) {
                     const badge = document.createElement("span");
                     badge.className = "elective";
-                    badge.innerText = subject;
+                    badge.innerText = names[subject] ? subject + " · " + names[subject] : subject;
                     td.replaceChildren(badge);
                 }
                 tr.appendChild(td);
@@ -1807,17 +1874,42 @@
             tbody.appendChild(tr);
         }
 
-        document.getElementById("loginView").classList.add("hidden");
-        document.getElementById("dashboardView").classList.remove("hidden");
+        highlightTime();
     }
 
+    function highlightTime() {
+        const table = byId("timetableBody").closest("table");
+        const now = new Date(Date.now() + 9 * 3600000);
+        const day = now.getUTCDay();
+        const minutes = now.getUTCHours() * 60 + now.getUTCMinutes();
+        const starts = [550, 610, 670, 730, 840, 900, 960];
+        for (const row of table.rows) {
+            for (const cell of row.cells) {
+                const isToday = day >= 1 && day <= 5 && cell.cellIndex === day;
+                cell.classList.toggle("today-cell", isToday);
+                const start = starts[row.rowIndex - 1];
+                cell.classList.toggle("current-cell", isToday && !!cell.textContent.trim() && minutes >= start && minutes < start + 50);
+                if (row.rowIndex === 0 && cell.cellIndex > 0)
+                    cell.textContent = "월화수목금"[cell.cellIndex - 1] + (isToday ? " (오늘)" : "");
+            }
+        }
+    }
+    setInterval(highlightTime, 30000);
     function logout() {
+        writeSetting("class", "");
         document.getElementById("dashboardView").classList.add("hidden");
         document.getElementById("loginView").classList.remove("hidden");
     }
 
     function toggleDarkMode() {
-        document.body.classList.toggle("dark-mode");
+        writeSetting("theme", document.body.classList.toggle("dark-mode") ? "dark" : "light");
+    }
+
+    document.body.classList.toggle("dark-mode", readSetting("theme") === "dark");
+    const lastClass = readSetting("class");
+    if (Object.hasOwn(timetableDB, lastClass)) {
+        [byId("gradeSelect").value, byId("classSelect").value] = lastClass.split("-");
+        enterApp();
     }
 
     function openModal(id) {

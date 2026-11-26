@@ -34,23 +34,57 @@ const SchoolData = (() => {
         if (!rows.length) return message(target, '이 달에 등록된 정보가 없습니다.');
         list(target, rows, meals ? mealText : r => `${dateLabel(r.date)} · ${r.name}${r.description ? '\n' + r.description : ''}`);
     }
+    const asUTC = value => Date.UTC(+value.slice(0,4), +value.slice(4,6)-1, +value.slice(6,8));
+    function offsetDate(date, offset) {
+        return new Date(asUTC(date) + offset * 86400000).toISOString().slice(0,10).replaceAll('-', '');
+    }
+    let mealDate = null;
+    function renderMeal() {
+        const date = mealDate || today();
+        el('lunchTitle').textContent = (date === today() ? '오늘 ' : '') + dateLabel(date) + ' 급식';
+        const range = snapshot?.coverage.meals || [];
+        el('prevMeal').disabled = !snapshot?.updatedAt || date <= range[0];
+        el('nextMeal').disabled = !snapshot?.updatedAt || date >= range[1];
+        if (!snapshot?.updatedAt) { el('lunchContent').textContent = emptyMessage(); return; }
+        const meals = snapshot.meals.filter(m => m.date === date && m.type === '2');
+        el('lunchContent').textContent = !inCoverage('meals', date) ? '저장된 급식 데이터의 조회 범위 밖입니다.' :
+            meals.length ? meals.map(m => m.dishes.join('\n') + (m.calories ? '\n' + m.calories : '')).join('\n\n') : '이 날 등록된 중식 정보가 없습니다.';
+    }
+    function moveMeal(offset) {
+        if (!snapshot?.updatedAt) return;
+        const [first, last] = snapshot.coverage.meals;
+        const target = offsetDate(mealDate || today(), offset);
+        mealDate = target < first ? first : target > last ? last : target;
+        renderMeal();
+    }
+    function examBadge() {
+        const date = today();
+        const exams = (snapshot?.events || []).filter(r => forGrade(r) && /정기시험|지필|중간고사|기말고사/.test(r.name));
+        const next = exams.find(r => r.date >= date);
+        const prev = exams.filter(r => r.date < date).pop();
+        // Consecutive school days can span a weekend.
+        const gap = prev && next ? (asUTC(next.date) - asUTC(prev.date)) / 86400000 : 0;
+        const weekend = gap === 3 && new Date(asUTC(prev.date)).getUTCDay() === 5;
+        if (next && (next.date === date || (prev?.name === next.name && weekend))) {
+            el('examDdayBadge').textContent = '📝 지필고사 진행 중';
+            el('examDdayBadge').title = next.name;
+        } else {
+            badge('examDdayBadge', '📝 지필고사', /정기시험|지필|중간고사|기말고사/);
+        }
+    }
     function badge(id, label, pattern) {
         const event = snapshot?.updatedAt && snapshot.events.find(r => r.date >= today() && forGrade(r) && pattern.test(r.name));
-        if (!event) { el(id).textContent = `${label} 일정 미등록`; return; }
-        const asUTC = value => Date.UTC(+value.slice(0,4), +value.slice(4,6)-1, +value.slice(6,8));
+        if (!event) { el(id).title = ""; el(id).textContent = `${label} 일정 미등록`; return; }
         const days = Math.round((asUTC(event.date) - asUTC(today())) / 86400000);
         el(id).textContent = `${label} ${days === 0 ? 'D-Day' : 'D-' + days}`;
         el(id).title = `${dateLabel(event.date)} ${event.name}`;
     }
     function render() {
         const date = today();
-        el('lunchTitle').textContent = `${date.slice(4,6)}/${date.slice(6,8)} 급식`;
+        renderMeal();
         if (!snapshot?.updatedAt) {
-            el('lunchContent').textContent = emptyMessage();
             message(el('recentEvents'), emptyMessage());
         } else {
-            const meals = snapshot.meals.filter(m => m.date === date && m.type === '2');
-            el('lunchContent').textContent = !inCoverage('meals', date) ? '오늘은 저장된 급식 데이터의 조회 범위 밖입니다.' : meals.length ? meals.map(m => m.dishes.join('\n') + (m.calories ? '\n' + m.calories : '')).join('\n\n') : '오늘 등록된 중식 정보가 없습니다.';
             const upcoming = snapshot.events.filter(r => r.date >= date && forGrade(r) && !/토요휴업일/.test(r.name)).slice(0, 5);
             list(el('recentEvents'), upcoming, r => `${dateLabel(r.date)} · ${r.name}`);
             if (!upcoming.length) message(el('recentEvents'), '조회 범위 안에 등록된 예정 일정이 없습니다.');
@@ -62,7 +96,7 @@ const SchoolData = (() => {
             if (failed) status.textContent += ' · 새로고침 실패, 이전 자료 표시 중';
             if (age > 48 * 3600000) status.textContent += ' · 갱신이 지연되고 있습니다. 학교 공지를 확인해 주세요.';
         } else status.textContent = emptyMessage();
-        badge('examDdayBadge', '📝 지필고사', /정기시험|지필|중간고사|기말고사/);
+        examBadge();
         badge('vacationBadge', '🌴 방학', /방학식/);
         badge('csatBadge', '🎯 수능', /^(대학수학능력시험|수능)(\s*\(.*\))?$/);
         renderMonth('meals'); renderMonth('events');
@@ -101,6 +135,9 @@ const SchoolData = (() => {
         finally { clearTimeout(timer); loading = false; render(); }
     }
     document.addEventListener('DOMContentLoaded', () => {
+        el('prevMeal').onclick = () => moveMeal(-1);
+        el('nextMeal').onclick = () => moveMeal(1);
+        el('todayMeal').onclick = () => { mealDate = null; renderMeal(); };
         el('mealMonth').addEventListener('change', () => renderMonth('meals'));
         el('eventMonth').addEventListener('change', () => renderMonth('events'));
     });

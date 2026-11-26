@@ -15,7 +15,7 @@ vm.runInContext(readFileSync('school-data.js','utf8'),context);
  assert.match(get('lunchContent').textContent,/우유\(2\)/);
  assert.match(get('lunchContent').textContent,/<img onerror/); // displayed as text, not HTML
  assert.equal(get('recentEvents').children.length,1);
- assert.match(get('examDdayBadge').textContent,/D-Day/);
+ assert.match(get('examDdayBadge').textContent,/진행 중/);
  fail = true;
  await vm.runInContext('SchoolData.load()',context);
  assert.match(get('dataStatus').textContent,/이전 자료/);
