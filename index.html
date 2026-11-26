@@ -332,6 +332,17 @@
                 </form>
                 <span id="saveStatus" role="status"></span>
             </details>
+            <details id="transferSettings">
+                <summary>설정 옮기기</summary>
+                <p>이 브라우저에서 저장한 학년·반과 선택과목을 복사하거나 다른 브라우저에서 가져온 코드를 붙여넣으세요.</p>
+                <button class="btn-icon" id="copySettings">내 설정 복사</button>
+                <label style="display:block;margin:8px 0">설정 코드
+                    <textarea id="transferCode" rows="2" maxlength="1200" style="display:block;width:100%;box-sizing:border-box"></textarea>
+                </label>
+                <p id="transferPreview" aria-live="polite"></p>
+                <button class="btn-icon" id="applySettings" disabled>이 설정 적용</button>
+                <span role="status" id="transferStatus"></span>
+            </details>
             <div class="table-container">
                 <table>
                     <thead>
@@ -1819,7 +1830,59 @@
         byId("saveStatus").textContent = saved ? "저장했어요." : "브라우저 저장이 제한되어 이번 방문에만 적용됩니다.";
         renderTimetable();
     };
+    function decodeSettings(value) {
+        try {
+            const data = JSON.parse(value);
+            if (data?.format !== prefix || typeof data.room !== "string" ||
+                !Object.hasOwn(timetableDB, data.room) || !Array.isArray(data.names) ||
+                data.names.length !== groups.length ||
+                !data.names.every(name => typeof name === "string" && name.length <= 24)) return null;
+            return data;
+        } catch { return null; }
+    }
+    const codeBox = byId("transferCode");
+    byId("copySettings").onclick = async () => {
+        const names = subjectNames();
+        codeBox.value = JSON.stringify({format: prefix, room: classKey(), names: groups.map(g => names[g] || "")});
+        byId("applySettings").disabled = true;
+        byId("transferPreview").textContent = "";
+        try {
+            await navigator.clipboard.writeText(codeBox.value);
+            byId("transferStatus").textContent = "복사했어요. 다른 브라우저의 설정 코드 칸에 붙여넣으세요.";
+        } catch {
+            codeBox.focus();
+            codeBox.select();
+            byId("transferStatus").textContent = "선택된 코드를 직접 복사해 주세요.";
+        }
+    };
+    codeBox.oninput = () => {
+        const data = decodeSettings(codeBox.value);
+        byId("transferStatus").textContent = "";
+        byId("applySettings").disabled = !data;
+        if (!data) {
+            byId("transferPreview").textContent = codeBox.value ? "이번 학기의 설정 코드를 확인해 주세요." : "";
+            return;
+        }
+        const [grade, room] = data.room.split("-");
+        const subjects = groups.map((group, i) => data.names[i] ? group + " · " + data.names[i] : group);
+        byId("transferPreview").textContent = grade + "학년 " + room + "반 | " + subjects.join(", ") + " — 적용하면 이 반의 기존 선택과목 설정을 바꿉니다.";
+    };
+    byId("applySettings").onclick = () => {
+        const data = decodeSettings(codeBox.value);
+        if (!data) return;
+        const names = Object.fromEntries(groups.map((g, i) => [g, data.names[i].trim()]));
+        const saved = writeSetting("subjects." + data.room, JSON.stringify(names));
+        [byId("gradeSelect").value, byId("classSelect").value] = data.room.split("-");
+        enterApp();
+        byId("transferSettings").open = true;
+        byId("transferStatus").textContent = saved ? "설정을 적용했어요." : "이번 방문에만 설정이 적용됩니다.";
+    };
     function enterApp() {
+        codeBox.value = "";
+        byId("transferSettings").open = false;
+        byId("transferPreview").textContent = "";
+        byId("transferStatus").textContent = "";
+        byId("applySettings").disabled = true;
         const grade = document.getElementById("gradeSelect").value;
         const classNum = document.getElementById("classSelect").value;
         const key = `${grade}-${classNum}`;
